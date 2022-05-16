@@ -43,10 +43,7 @@ class RowsAjaxUsers {
                 { data: "roles" },
             ],
             language: {
-                paginate: {
-                    previous: '<i class="cs-chevron-left"></i>',
-                    next: '<i class="cs-chevron-right"></i>',
-                },
+                url: '/json/datatable.spanish.json',
             },
             initComplete: function (settings, json) {
                 _this._setInlineHeight();

@@ -49,7 +49,7 @@ $description = 'Login Page'
                 <!-- Email Address -->
                 <div class="mb-3 filled form-group tooltip-end-top">
                     <i data-acorn-icon="email"></i>
-                    <x-input id="email" name="email" type="email" :placeholder="__('Email')" :value="old('email')" required
+                    <x-input id="email" name="email" type="email" :placeholder="__('E-Mail Address')" :value="old('email')" required
                         autofocus />
                 </div>
 
@@ -65,7 +65,7 @@ $description = 'Login Page'
                 <div class="mb-3 form-group">
                     <div class="form-check">
                         <input name="remember" class="form-check-input" type="checkbox" id="remember_me" />
-                        <label class="form-check-label" for="remember_me">{{ __('Remember me') }}</label>
+                        <label class="form-check-label" for="remember_me">{{ __('Remember Me') }}</label>
                     </div>
                 </div>
 

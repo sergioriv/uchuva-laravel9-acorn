@@ -16,17 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard'); })->name('dashboard');
-    Route::view('/vertical', 'vertical')->name('vertical');
-    Route::view('/horizontal', 'horizontal')->name('horizontal');
-    // Route::get('register', [RegisteredUserController::class, 'create'])->name('auth.register');
-    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     /* Route Users */
     Route::resource('users', UserController::class)->except('destroy')->names('support.users');

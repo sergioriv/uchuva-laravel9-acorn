@@ -108,7 +108,7 @@
                         <li>
                             <a href="#">
                                 <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
-                                <span class="align-middle">Settings</span>
+                                <span class="align-middle">{{ __('Settings') }}</span>
                             </a>
                         </li>
                         <li>
@@ -222,14 +222,14 @@
                 </a>
             </li>
             @endcan
-            {{-- @can('support.users') --}}
+            @can('support.roles')
             <li>
                 <a href="{{ route('support.roles.index') }}">
                     <i class="bi-person-badge icon icon-18" class="icon"></i>
                     <span class="label">Roles</span>
                 </a>
             </li>
-            {{-- @endcan --}}
+            @endcan
         </ul>
     </div>
     <!-- Menu End -->
