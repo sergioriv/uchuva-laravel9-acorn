@@ -51,6 +51,9 @@ class RowsAjaxUsers {
             drawCallback: function (settings) {
                 _this._setInlineHeight();
             },
+            preDrawCallback: function (settings) {
+                _this._preDrawCallback($(this), settings);
+            },
             columnDefs: [
                 // Adding Name content as an anchor with a target #
                 {
@@ -101,5 +104,13 @@ class RowsAjaxUsers {
         const pageLength = this._datatable.page.len();
         document.querySelector(".dataTables_scrollBody").style.height =
             this._staticHeight * pageLength + "px";
+    }
+
+    _preDrawCallback(datatable, settings){
+        var api = new $.fn.dataTable.Api(settings);
+        var pagination = datatable
+            .closest('.dataTables_wrapper')
+            .find('.dataTables_paginate');
+        pagination.toggle(api.page.info().pages > 1);
     }
 }

@@ -23,6 +23,7 @@ class Scripts {
             document.body.classList.remove("spinner");
             this._initBase();
             this._initCommon();
+            this._initPages();
             this._initPlugins();
         }, 100);
     }
@@ -53,16 +54,32 @@ class Scripts {
         }
     }
 
+    // Pages initialization
+    _initPages() {
+        if (typeof ResponsiveTab !== "undefined") {
+            document.querySelector(".responsive-tabs") !== null &&
+                new ResponsiveTab(document.querySelector(".responsive-tabs"));
+        }
+    }
+
     // Plugin pages initialization
     _initPlugins() {
         // datatable.editablerows.js initialization
-        if (typeof RowsAjaxDatatable !== 'undefined') {
-            const rowsAjaxDatatable = new RowsAjaxDatatable();
+        if (typeof RowsAjaxUsers !== "undefined") {
+            const rowsAjaxUsers = new RowsAjaxUsers();
         }
-        if (typeof RowsAjaxRoles !== 'undefined') {
+        if (typeof RowsAjaxRoles !== "undefined") {
             const rowsAjaxRoles = new RowsAjaxRoles();
         }
-
+        if (typeof RowsAjaxRestaurants !== "undefined") {
+            const rowsAjaxRestaurants = new RowsAjaxRestaurants();
+        }
+        if (typeof RowsAjaxSubscriptions !== "undefined") {
+            const rowsAjaxSubscriptions = new RowsAjaxSubscriptions();
+        }
+        if (typeof RowsAjaxBranches !== "undefined") {
+            const rowsAjaxBranches = new RowsAjaxBranches();
+        }
     }
 
     // Settings initialization

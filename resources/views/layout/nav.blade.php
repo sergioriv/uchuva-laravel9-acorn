@@ -195,41 +195,51 @@
             <li>
                 <a href="/dashboard">
                     <i data-acorn-icon="home" class="icon" data-acorn-size="18"></i>
-                    <span class="label">Dashboard</span>
+                    <span class="label">{{ __('Dashboard') }}</span>
                 </a>
             </li>
-            @can('horizontal')
+
+            @can('support.restaurants')
             <li>
-                <a href="/horizontal">
-                    <i data-acorn-icon="grid-2" class="icon" data-acorn-size="18"></i>
-                    <span class="label">Horizontal</span>
-                </a>
-            </li>
-            @endcan
-            @can('vertical')
-            <li>
-                <a href="/vertical">
-                    <i data-acorn-icon="grid-3" class="icon" data-acorn-size="18"></i>
-                    <span class="label">Vertical</span>
+                <a href="{{ route('support.restaurants.index') }}">
+                    <i class="bi-building icon icon-18"></i>
+                    <span class="label">{{ __('Restaurants') }}</span>
                 </a>
             </li>
             @endcan
             @can('support.users')
             <li>
                 <a href="{{ route('support.users.index') }}">
-                    <i class="bi-people-fill icon icon-18" class="icon"></i>
-                    <span class="label">Users</span>
+                    <i class="bi-people-fill icon icon-18"></i>
+                    <span class="label">{{ __('Users') }}</span>
                 </a>
             </li>
             @endcan
             @can('support.roles')
             <li>
                 <a href="{{ route('support.roles.index') }}">
-                    <i class="bi-person-badge icon icon-18" class="icon"></i>
-                    <span class="label">Roles</span>
+                    <i class="bi-person-badge icon icon-18"></i>
+                    <span class="label">{{ __('Roles') }}</span>
                 </a>
             </li>
             @endcan
+
+            {{-- RESTAURANT NAV --}}
+            @can('branches')
+            <li>
+                <a href="{{ route('restaurant.branches.index') }}">
+                    <i class="bi-collection icon icon-18"></i>
+                    <span class="label">{{ __('Branches') }}</span>
+                </a>
+            </li>
+            @endcan
+
+            {{-- <li>
+                <a href="{{ route('user.profile') }}">
+                    <i data-acorn-icon="user" class="icon" data-acorn-size="18"></i>
+                    <span class="label">{{ __('Branches') }}</span>
+                </a>
+            </li> --}}
         </ul>
     </div>
     <!-- Menu End -->

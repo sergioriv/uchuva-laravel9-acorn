@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\ConfirmEmailController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\restaurant\BranchController;
+use App\Http\Controllers\support\RestaurantController;
 use App\Http\Controllers\support\RoleController;
+use App\Http\Controllers\support\SubscriptionController;
 use App\Http\Controllers\support\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,16 +25,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard'); })->name('dashboard');
 
-    /* Route Users */
-    Route::resource('users', UserController::class)->except('destroy')->names('support.users');
-    Route::get('users.json', [UserController::class, 'data']);
     Route::get('insert_roles', [UserController::class, 'insert_roles']);
     Route::get('destroy_users', [UserController::class, 'destroy_users']);
 
+
+    /* Route Users */
+    Route::put('change-password', [ConfirmEmailController::class, 'change_password'])->name('support.users.password');
+    Route::resource('users', UserController::class)->except('destroy','create','store')->names('support.users');
+    Route::get('users.json', [UserController::class, 'data']);
+
+    /* Route Profile */
+    Route::get('profile', [ProfileController::class, 'edit'])->name('user.profile');
+
     /* Route Roles */
-    Route::resource('roles', RoleController::class)->except('destroy')->names('support.roles');
+    Route::resource('roles', RoleController::class)->except('destroy','show')->names('support.roles');
     Route::get('roles.json', [RoleController::class, 'data']);
 
+    /* Route Restaurants */
+    Route::resource('restaurants', RestaurantController::class)->except('destroy')->names('support.restaurants');
+    Route::get('restaurants.json', [RestaurantController::class, 'data']);
+
+    /* Route Restaurants Subscriptions */
+    Route::resource('restaurants/{restaurant}/subscriptions', SubscriptionController::class)->only('create','store')->names('support.subscriptions');
+    Route::get('restaurants/{restaurant}/subscriptions.json', [SubscriptionController::class, 'data']);
+
+    /* Route Branches */
+    Route::resource('branches', BranchController::class)->names('restaurant.branches');
+    Route::get('branches.json', [BranchController::class, 'data']);
 });
 
 

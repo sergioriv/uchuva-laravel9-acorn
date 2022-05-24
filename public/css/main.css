@@ -1,6 +1,6 @@
 /* This file is reserved for overriding and extending the template styles. */
 
-.dataTable th { padding-bottom: 0!important; }
+/* .dataTable th { padding-bottom: 0!important; }
 ul.pagination {
     justify-content: center;
     margin-top: 15px;
@@ -27,10 +27,10 @@ ul.pagination li.page-item:last-child .page-link {
 .page-link {
     width: fit-content;
     min-width: var(--input-height);
-}
+} */
 
 /*
- * Loading start : https://codepen.io/jake-lee/pen/jrJYON
+ * Loading start
  */
  @keyframes rotate {
     from {
@@ -52,25 +52,31 @@ ul.pagination li.page-item:last-child .page-link {
 }
 
 .load {
-	width: 30px;
-	height: 30px;
+	width: 36px;
+	height: 36px;
 	margin: 0 auto;
-	border:solid 2px var(--primary);
+	border:solid 4px rgba(0, 0, 0, .1);
 	border-radius: 50%;
-	/* border-right-color: transparent; */
-	border-bottom-color: transparent;
-	-webkit-transition: all 0.5s ease-in;
-    -webkit-animation-name:             rotate;
-    -webkit-animation-duration:         1.0s;
-    -webkit-animation-iteration-count:  infinite;
-    -webkit-animation-timing-function:  linear;
+	border-left-color: var(--primary);
 
-    transition: all 0.5s ease-in;
-    animation-name:             rotate;
-    animation-duration:         1.0s;
-    animation-iteration-count:  infinite;
-    animation-timing-function: linear;
+    animation: rotate 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+    -webkit-animation: rotate 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
 }
 /*
- * End Loading
+ * Loading End
  */
+
+
+/*
+ * DataTables Start
+ */
+.dataTables_scrollBody {
+    height: fit-content !important;
+}
+/*
+ * DataTables End
+ */
+
+input[type="file"] {
+    display: none;
+}

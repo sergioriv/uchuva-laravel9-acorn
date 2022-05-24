@@ -14,24 +14,29 @@ return new class extends Migration
     public function up()
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('id');
+            // $table->unsignedBigInteger('user_id');
+            // $table->string('name');
+            // $table->string('email')->unique();
+            $table->string('nit', 20);
             $table->string('telephone', 20)->nullable();
-            $table->string('image')->nullable();
             $table->dateTime('unsubscribe');
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->primary('id');
+
+            $table->foreign('id')
                     ->references('id')
                     ->on('users')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
         });
 
-        Schema::create('suscriptions', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
             $table->unsignedTinyInteger('quantity');
+            $table->dateTime('payment_date');
             $table->dateTime('unsubscribe');
             $table->timestamps();
 
@@ -56,17 +61,20 @@ return new class extends Migration
         });
 
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('restaurant_id');
-            $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('user_id');
+            // $table->string('name');
+            // $table->string('email')->unique();
             $table->tinyText('code');
             $table->tinyText('city');
             $table->string('address')->nullable();
             $table->string('telephone')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->primary('id');
+
+            $table->foreign('id')
                     ->references('id')
                     ->on('users')
                     ->onUpdate('cascade')
@@ -84,8 +92,9 @@ return new class extends Migration
             $table->unsignedBigInteger('restaurant_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('branch_id');
+            $table->string('name');
+            $table->string('email')->unique();
             $table->string('telephone')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -205,7 +214,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('restaurants');
-        Schema::dropIfExists('suscriptions');
+        Schema::dropIfExists('subscriptions');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('branches');
         Schema::dropIfExists('waiters');

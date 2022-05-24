@@ -1,4 +1,12 @@
 {
+    "Add New" : "Agregar nuevo",
+    "Telephone": "Teléfono",
+    "Branches": "Sucursales",
+    "Branch": "Sucursal",
+    "Branches list": "Sucursales",
+
+    "contact": "Contacto",
+
     "30 Days": "30 Días",
     "60 Days": "60 Días",
     "90 Days": "90 Días",
@@ -16,6 +24,7 @@
     "Action Status": "Estado de la acción",
     "Action Target": "Objetivo de la acción",
     "Actions": "Acciones",
+    "Account verified successfully": "Cuenta verificada con éxito",
     "Add": "Añadir",
     "Add a new team member to your team, allowing them to collaborate with you.": "Agregue un nuevo miembro a su equipo, permitiéndole colaborar con usted.",
     "Add additional security to your account using two factor authentication.": "Agregue seguridad adicional a su cuenta mediante la autenticación de dos factores.",

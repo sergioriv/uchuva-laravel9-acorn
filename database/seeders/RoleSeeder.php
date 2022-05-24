@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Restaurant;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,48 +23,52 @@ class RoleSeeder extends Seeder
     {
         $support_users  = Permission::create([ 'name' => 'support.users' ]);
         $support_roles  = Permission::create([ 'name' => 'support.roles' ]);
-        $restaurantes  = Permission::create([ 'name' => 'restaurantes' ]);
+        $restaurants  = Permission::create([ 'name' => 'support.restaurants' ]);
 
         $dashboard  = Permission::create([ 'name' => 'dashboard' ]);
 
-        $comandas_index  = Permission::create([ 'name' => 'comandas.index' ]);
-        $comandas_create  = Permission::create([ 'name' => 'comandas.create' ]);
-        $comandas_show  = Permission::create([ 'name' => 'comandas.show' ]);
-        $comandas_edit  = Permission::create([ 'name' => 'comandas.edit' ]);
-        $comandas_destroy  = Permission::create([ 'name' => 'comandas.destroy' ]);
+        $orders_index  = Permission::create([ 'name' => 'orders.index' ]);
+        $orders_create  = Permission::create([ 'name' => 'orders.create' ]);
+        $orders_show  = Permission::create([ 'name' => 'orders.show' ]);
+        $orders_edit  = Permission::create([ 'name' => 'orders.edit' ]);
+        $orders_destroy  = Permission::create([ 'name' => 'orders.destroy' ]);
 
-        $sucursales  = Permission::create([ 'name' => 'sucursales' ]);
-        $meseros  = Permission::create([ 'name' => 'meseros' ]);
-        $platos  = Permission::create([ 'name' => 'platos' ]);
+        $branches  = Permission::create([ 'name' => 'branches' ]);
+        $waiters  = Permission::create([ 'name' => 'waiters' ]);
+        $dishes  = Permission::create([ 'name' => 'dishes' ]);
 
 
 
         $SUPPORT = Role::create([ 'name' => 'SUPPORT' ])->syncPermissions([
             $support_users,
             $support_roles,
-            $restaurantes,
+            $restaurants,
         ]);
 
-        $restaurant = Role::create([ 'name' => 'RESTAURANT' ])->syncPermissions([
+        $restaurant_role = Role::create([ 'name' => 'RESTAURANT' ])->syncPermissions([
             $dashboard,
-            $sucursales
+            $branches
         ]);
 
-        Role::create([ 'name' => 'BRANCH' ])->syncPermissions([
+        $branch_role = Role::create([ 'name' => 'BRANCH' ])->syncPermissions([
             $dashboard,
-            $meseros,
-            $platos,
-            $comandas_index,
-            $comandas_destroy
+            $waiters,
+            $dishes,
+            $orders_index,
+            $orders_destroy
         ]);
 
         Role::create([ 'name' => 'WAITER' ])->syncPermissions([
-            $comandas_index,
-            $comandas_create,
-            $comandas_show,
-            $comandas_edit
+            $orders_index,
+            $orders_create,
+            $orders_show,
+            $orders_edit
         ]);
 
+
+        /*
+         * Creacion user
+         */
         User::create([
             'name' => 'support',
             'email' => 'support@mantiztechnology.com',
@@ -70,19 +76,50 @@ class RoleSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ])->syncRoles($SUPPORT);
 
-        /*
-         * Creacion user
-         */
-        $user = User::create([
+        $restaurant_user = User::create([
             'name' => 'restaurante 1',
             'email' => 'res1@example',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        ])->syncRoles($restaurant);
+        ])->syncRoles($restaurant_role);
 
+        $branch_user = User::create([
+            'name' => 'sucursal 1',
+            'email' => 'suc1@example',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ])->syncRoles($branch_role);;
+
+
+        /*
+         * Creacion Restaurant
+         */
         Restaurant::create([
-            'user_id' => $user->id,
+            'id' => $restaurant_user->id,
+            'nit' => 'nit9999999',
             'unsubscribe' => now()->addMonth(1),
+        ]);
+
+
+        /*
+         * Creacion Restaurant Subscription
+         */
+        Subscription::create([
+            'restaurant_id' => $restaurant_user->id,
+            'quantity' => 5,
+            'payment_date' => now(),
+            'unsubscribe' => now()->addMonth(5)
+        ]);
+
+
+        /*
+         * Creacion Branches
+         */
+        Branch::create([
+            'id' => $branch_user->id,
+            'restaurant_id' => $restaurant_user->id,
+            'code' => Str::upper(Str::random(5)),
+            'city' => 'bogotá'
         ]);
 
     }

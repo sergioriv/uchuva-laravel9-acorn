@@ -42,7 +42,7 @@ $description = 'Forgot Password Page'
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <x-validation-errors class="mb-4" :errors="$errors" />
 
             <form id="forgotPasswordForm" class="tooltip-end-bottom" method="POST" action="{{ route('password.email') }}" novalidate>
                 @csrf

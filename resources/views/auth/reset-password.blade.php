@@ -39,7 +39,7 @@ $description = 'Reset Password Page'
         <div>
 
             <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <x-validation-errors class="mb-4" :errors="$errors" />
 
             <form id="resetForm" method="POST" action="{{ route('password.update') }}" class="tooltip-end-bottom"
                 novalidate>

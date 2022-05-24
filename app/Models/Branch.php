@@ -10,6 +10,8 @@ class Branch extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
+        'restaurant_id',
         'code',
         'city',
         'address',
@@ -18,13 +20,11 @@ class Branch extends Model
     ];
 
     protected $hidden = [
-        'restaurant_id',
-        'user_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id')->select(['id','name','email', 'avatar']);
     }
 
     public function restaurant()
