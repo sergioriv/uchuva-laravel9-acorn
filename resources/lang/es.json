@@ -10,13 +10,14 @@
     "Restaurant created!": "Restaurante creado!",
     "Restaurant updated!": "Restaurante actualizado!",
 
-    "Branches": "Sucursales",
     "Branch": "Sucursal",
+    "Branches": "Sucursales",
     "Branches list": "Sucursales",
     "Create branch": "Crear Sucursal",
     "Branch created!": "Sucursal creada!",
     "Branch updated!": "Sucursal actualizada!",
 
+    "Waiter": "Camarero",
     "Waiters": "Camareros",
     "Waiters list": "Camareros",
     "Create waiter": "Crear camarero",

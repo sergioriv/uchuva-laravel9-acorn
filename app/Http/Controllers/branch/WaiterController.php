@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Waiter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class WaiterController extends Controller
 {
@@ -146,14 +147,25 @@ class WaiterController extends Controller
         }
     }
 
-    /* private function branch()
+    public static function profile_update(Request $request, Waiter $waiter)
     {
-        switch (UserController::role_auth()) {
-            case 'Branch':
-                return Auth::user()->id;
+        $request->validate([
+            'avatar'     => ['image', 'max:2024'],
+            'name'      => ['required', 'string', 'max:255'],
+            'telephone' => ['required', 'string', 'max:20']
+        ]);
 
-            default:
-                return null;
-        }
-    } */
+        $avatar = UserController::upload_avatar($request);
+
+        if ( $request->hasFile('avatar') )
+            File::delete(public_path($waiter->user->avatar));
+
+        if( $request->name != $waiter->user->name
+            || $avatar != $waiter->user->avatar )
+            UserController::_update($waiter->id, $request->name, null, $avatar);
+
+        $waiter->update([
+            'telephone' => $request->telephone
+        ]);
+    }
 }

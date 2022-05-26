@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\branch\WaiterController;
 use App\Http\Controllers\restaurant\BranchController;
 use App\Http\Controllers\support\RestaurantController;
 use App\Http\Controllers\support\UserController;
 use App\Models\Branch;
 use App\Models\Restaurant;
 use App\Models\User;
+use App\Models\Waiter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -35,6 +37,11 @@ class ProfileController extends Controller
                 $deps = json_decode(file_get_contents('json/colombia.min.json'), true);
 
                 return view('profile.branch-edit')->with(['branch' => $branch, 'deps' => $deps]);
+                break;
+
+            case 'Waiter':
+                $waiter = Waiter::with('user')->findOrFail(Auth::user()->id);
+                return view('profile.waiter-edit')->with('waiter', $waiter);
                 break;
 
             default:
@@ -80,6 +87,11 @@ class ProfileController extends Controller
             case 'Branch':
                 $branch = Branch::findOrFail(Auth::user()->id);
                 BranchController::profile_update($request, $branch);
+                break;
+
+            case 'Waiter':
+                $waiter = Waiter::findOrFail(Auth::user()->id);
+                WaiterController::profile_update($request, $waiter);
                 break;
 
             default:

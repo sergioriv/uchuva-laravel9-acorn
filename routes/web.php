@@ -59,6 +59,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /* Route Waiters */
     Route::resource('waiters', WaiterController::class)->names('branch.waiters');
     Route::get('waiters.json', [WaiterController::class, 'data']);
+
+    /* Route Categories */
+    Route::resource('categories', WaiterController::class)->names('restaurant.categories');
+    Route::get('categories.json', [WaiterController::class, 'data']);
 });
 
 
