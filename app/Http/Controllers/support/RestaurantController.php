@@ -5,6 +5,7 @@ namespace App\Http\Controllers\support;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class RestaurantController extends Controller
@@ -125,6 +126,31 @@ class RestaurantController extends Controller
         return redirect()->route('support.restaurants.index')->with(
             ['notify' => 'success', 'title' => __('Restaurant updated!')],
         );
+    }
+
+
+
+    public static function profile_update(Request $request, Restaurant $restaurant)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nit' => ['required', 'string', 'max:20'],
+            'telephone' => ['required', 'string', 'max:20']
+        ]);
+
+        $avatar = UserController::upload_avatar($request);
+
+        if ( $request->hasFile('avatar') )
+            File::delete(public_path($restaurant->user->avatar));
+
+        if( $request->name != $restaurant->user->name
+            || $avatar != $restaurant->user->avatar  )
+            UserController::_update($restaurant->id, $request->name, null, $avatar);
+
+        $restaurant->update([
+            'nit' => $request->nit,
+            'telephone' => $request->telephone
+        ]);
     }
 
 }

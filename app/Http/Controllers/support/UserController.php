@@ -99,8 +99,13 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
         $user->update([
             'name' => $name,
-            'email' => $email,
         ]);
+
+        if($email != null){
+            $user->update([
+                'email' => $email,
+            ]);
+        }
 
         if($avatar != null){
             $user->update([

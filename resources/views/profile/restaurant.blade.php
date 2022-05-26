@@ -1,5 +1,5 @@
 @php
-$title = $restaurant->user->name . ' | '. __('Profile');
+$title = $restaurant->user->name;
 @endphp
 @extends('layout',['title'=>$title])
 
@@ -16,7 +16,7 @@ $title = $restaurant->user->name . ' | '. __('Profile');
 
 @section('js_page')
 <script src="/js/cs/datatable.extend.js"></script>
-<script src="/js/plugins/datatable/subscriptions_datatable.ajax.js"></script>
+<script src="/js/plugins/datatable/profile/subscriptions_datatable.ajax.js"></script>
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@ $title = $restaurant->user->name . ' | '. __('Profile');
             <!-- Title Start -->
             <section class="scroll-section" id="title">
                 <div class="page-title-container">
-                    <h1 class="mb-0 pb-0 display-4">{{ __('Restaurant') .' | '. __($title) }}</h1>
+                    <h1 class="mb-0 pb-0 display-4">{{ $title . ' | '. __('Profile') }}</h1>
                 </div>
             </section>
             <!-- Title End -->
@@ -45,7 +45,7 @@ $title = $restaurant->user->name . ' | '. __('Profile');
 
                                         @if ($restaurant->user->avatar != NULL)
                                         <div class="sw-13 position-relative mb-3">
-                                            <img src="/img/profile/profile-3.webp" class="img-fluid rounded-xl"
+                                            <img src="{{ $restaurant->user->avatar }}" class="rounded-xl sh-13 sw-13"
                                                 alt="thumb" />
                                         </div>
                                         @else
@@ -74,7 +74,7 @@ $title = $restaurant->user->name . ' | '. __('Profile');
 
                                 <div class="mb-3">
                                     <div class="d-flex flex-row justify-content-end w-100 w-sm-50 w-xl-100">
-                                        <a href="{{ route('support.restaurants.edit', $restaurant) }}" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-md-auto">
+                                        <a href="{{ route('user.profile.edit') }}" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-md-auto">
                                             <i data-acorn-icon="edit"></i>
                                             <span>{{ __('Edit') }}</span>
                                         </a>
@@ -95,41 +95,21 @@ $title = $restaurant->user->name . ' | '. __('Profile');
                                 <a class="nav-link active" data-bs-toggle="tab" href="#paymentsTab" role="tab"
                                     aria-selected="true">{{ __('Payments') }}</a>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" data-bs-toggle="tab" href="#branchesTab" role="tab"
-                                    aria-selected="false">{{ __('Branches') }}</a>
-                            </li>
                         </ul>
                         <!-- Title Tabs End -->
 
                         <div class="tab-content">
                             <!-- Payments Tab Start -->
                             <div class="tab-pane fade active show" id="paymentsTab" role="tabpanel">
-                                <!-- Payments Buttons Start -->
-                                <div class="mb-2 d-flex align-items-start justify-content-end">
-                                    <!-- Create Payment Button Start -->
-                                    <a href="{{ route('support.subscriptions.create', $restaurant) }}"
-                                        class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-md-auto">
-                                        <i data-acorn-icon="plus"></i>
-                                        <span>{{ __('Create Payment') }}</span>
-                                    </a>
-                                    <!-- Create Payment Button End -->
-                                </div>
-                                <!-- Payments Buttons End -->
                                 <div class="data-table-rows slim">
                                     <!-- Table Start -->
                                     <div class="data-table-responsive-wrapper">
                                         <table id="datatable_subscriptions" class="data-table nowrap w-100">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-muted text-small text-uppercase">{{ __('Quantity')
-                                                        }}</th>
-                                                    <th class="text-muted text-small text-uppercase">{{ __('Payment
-                                                        date') }}</th>
-                                                    <th class="text-muted text-small text-uppercase">{{
-                                                        __('Unsubscribe') }}</th>
-                                                    <th class="text-muted text-small text-uppercase">{{ __('Created at')
-                                                        }}</th>
+                                                    <th class="text-muted text-small text-uppercase">{{ __('Quantity') }}</th>
+                                                    <th class="text-muted text-small text-uppercase">{{ __('Payment date') }}</th>
+                                                    <th class="text-muted text-small text-uppercase">{{ __('Unsubscribe') }}</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -138,12 +118,6 @@ $title = $restaurant->user->name . ' | '. __('Profile');
                                 </div>
                             </div>
                             <!-- Payments Tab End -->
-
-                            <!-- Branches Tab Start -->
-                            <div class="tab-pane fade" id="branchesTab" role="tabpanel">
-                                branches
-                            </div>
-                            <!-- Branches Tab End -->
                         </div>
                     </div>
                     <!-- Right Side End -->

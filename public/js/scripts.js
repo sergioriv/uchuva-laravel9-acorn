@@ -80,6 +80,9 @@ class Scripts {
         if (typeof RowsAjaxBranches !== "undefined") {
             const rowsAjaxBranches = new RowsAjaxBranches();
         }
+        if (typeof RowsAjaxWaiters !== "undefined") {
+            const rowsAjaxWaiters = new RowsAjaxWaiters();
+        }
     }
 
     // Settings initialization

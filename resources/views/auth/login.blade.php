@@ -25,16 +25,8 @@ $description = 'Login Page'
             </a>
         </div>
         <div class="mb-5">
-            <h2 class="cta-1 mb-0 text-primary">Welcome,</h2>
-            <h2 class="cta-1 text-primary">let's get started!</h2>
-        </div>
-        <div class="mb-5">
-            <p class="h6">Please use your credentials to login.</p>
-            <p class="h6">
-                If you are not a member, please
-                <a href="/register">register</a>
-                .
-            </p>
+            <h2 class="cta-1 mb-0 text-primary">{{ __('Welcome') }},</h2>
+            <h2 class="cta-1 text-primary">{{ __("let's get started!") }}</h2>
         </div>
         <div>
             <!-- Session Status -->
@@ -58,7 +50,7 @@ $description = 'Login Page'
                     <i data-acorn-icon="lock-off"></i>
                     <x-input id="password" class="pe-7" type="password" name="password" :placeholder="__('Password')"
                         required autocomplete="current-password" />
-                    <a class="text-small position-absolute t-3 e-3" href="{{ route('password.request') }}">Forgot?</a>
+                    <a class="text-small position-absolute t-3 e-3" href="{{ route('password.request') }}">{{ __('Forgot') }}?</a>
                 </div>
 
                 <!-- Remember Me -->

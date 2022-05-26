@@ -1,23 +1,16 @@
 @php
-$title = __('Create branch');
+$title = __('Create waiter');
 @endphp
 @extends('layout',['title'=>$title])
 
 @section('css')
-<link rel="stylesheet" href="/css/vendor/select2.min.css" />
-<link rel="stylesheet" href="/css/vendor/select2-bootstrap4.min.css" />
 @endsection
 
 @section('js_vendor')
-<script src="/js/cs/scrollspy.js"></script>
-<script src="/js/vendor/select2.full.min.js"></script>
 @endsection
 
 @section('js_page')
 <script src="/js/form/avatar.js"></script>
-<script>
-    jQuery('#city').select2({placeholder: ''});
-</script>
 @endsection
 
 @section('content')
@@ -39,7 +32,7 @@ $title = __('Create branch');
                         <!-- Validation Errors -->
                         <x-validation-errors class="mb-4" :errors="$errors" />
 
-                        <form method="POST" action="{{ route('restaurant.branches.store') }}" class="tooltip-end-bottom"
+                        <form method="POST" action="{{ route('branch.waiters.store') }}" class="tooltip-end-bottom"
                             enctype="multipart/form-data" novalidate>
                             @csrf
 
@@ -52,7 +45,7 @@ $title = __('Create branch');
                                             <div id="preview">
                                                 <div
                                                     class="sw-13 sh-13 mb-3 d-inline-block bg-separator d-flex justify-content-center align-items-center rounded-xl">
-                                                    <i class="bi-collection icon icon-24" class="icon"></i>
+                                                    <i class="bi-person-square icon icon-24" class="icon"></i>
                                                 </div>
                                             </div>
 
@@ -82,31 +75,6 @@ $title = __('Create branch');
                                             <x-label>{{ __('Telephone') }}</x-label>
                                             <x-input id="telephone" name="telephone" :value="old('telephone')"
                                                 required />
-                                        </div>
-
-                                        <!-- City -->
-                                        <div class="mb-3 w-100">
-                                            <x-label>{{ __('City') }}</x-label>
-                                            <select name="city" id="city" required>
-                                                <option value="" selected disabled></option>
-                                                @foreach ($deps as $dep)
-                                                @foreach ($dep['ciudades'] as $city)
-                                                @php
-                                                $depCity = $dep['departamento'] .' - '. $city;
-                                                @endphp
-                                                <option value="{{ $depCity }}"
-                                                    {{ old('city')==$depCity ? ' selected' : '' }} >
-                                                    {{ $depCity }}
-                                                </option>
-                                                @endforeach
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <!-- Address -->
-                                        <div class="mb-3">
-                                            <x-label>{{ __('Address') }}</x-label>
-                                            <x-input id="address" name="address" :value="old('address')" required />
                                         </div>
 
                                     </div>

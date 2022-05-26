@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ConfirmEmailController;
+use App\Http\Controllers\branch\WaiterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\restaurant\BranchController;
 use App\Http\Controllers\support\RestaurantController;
@@ -35,7 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('users.json', [UserController::class, 'data']);
 
     /* Route Profile */
-    Route::get('profile', [ProfileController::class, 'edit'])->name('user.profile');
+    Route::get('profile', [ProfileController::class, 'show'])->name('user.profile');
+    Route::get('profile/edit', [ProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('user.profile.update');
 
     /* Route Roles */
     Route::resource('roles', RoleController::class)->except('destroy','show')->names('support.roles');
@@ -52,6 +55,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /* Route Branches */
     Route::resource('branches', BranchController::class)->names('restaurant.branches');
     Route::get('branches.json', [BranchController::class, 'data']);
+
+    /* Route Waiters */
+    Route::resource('waiters', WaiterController::class)->names('branch.waiters');
+    Route::get('waiters.json', [WaiterController::class, 'data']);
 });
 
 

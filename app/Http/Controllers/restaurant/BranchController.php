@@ -18,6 +18,10 @@ use Illuminate\Validation\Rule;
 
 class BranchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:branches');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -117,7 +121,6 @@ class BranchController extends Controller
         $request->validate([
             'avatar'     => ['image', 'max:2024'],
             'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'email', 'max:255', Rule::unique('users')->ignore($branch->id)],
             'telephone' => ['required', 'string', 'max:20'],
             'city'      => ['required', 'string', 'max:100'],
             'address'   => ['string', 'max:255'],
@@ -129,11 +132,10 @@ class BranchController extends Controller
             File::delete(public_path($branch->user->avatar));
 
         if( $request->name != $branch->user->name
-            || $request->email != $branch->user->email
             || $avatar != $branch->user->avatar )
-            UserController::_update($branch->id, $request->name, $request->email, $avatar);
+            UserController::_update($branch->id, $request->name, null, $avatar);
 
-       $branch->update([
+        $branch->update([
             'city' => $request->city,
             'address' => $request->address,
             'telephone' => $request->telephone
@@ -153,5 +155,33 @@ class BranchController extends Controller
             default:
                 return null;
         }
+    }
+
+
+
+    public static function profile_update(Request $request, Branch $branch)
+    {
+        $request->validate([
+            'avatar'     => ['image', 'max:2024'],
+            'name'      => ['required', 'string', 'max:255'],
+            'telephone' => ['required', 'string', 'max:20'],
+            'city'      => ['required', 'string', 'max:100'],
+            'address'   => ['string', 'max:255'],
+        ]);
+
+        $avatar = UserController::upload_avatar($request);
+
+        if ( $request->hasFile('avatar') )
+            File::delete(public_path($branch->user->avatar));
+
+        if( $request->name != $branch->user->name
+            || $avatar != $branch->user->avatar )
+            UserController::_update($branch->id, $request->name, null, $avatar);
+
+        $branch->update([
+            'city' => $request->city,
+            'address' => $request->address,
+            'telephone' => $request->telephone
+        ]);
     }
 }

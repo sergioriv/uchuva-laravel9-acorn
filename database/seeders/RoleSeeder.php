@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Restaurant;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Models\Waiter;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -27,6 +28,8 @@ class RoleSeeder extends Seeder
 
         $dashboard  = Permission::create([ 'name' => 'dashboard' ]);
 
+        $user_profile  = Permission::create([ 'name' => 'user.profile' ]);
+
         $orders_index  = Permission::create([ 'name' => 'orders.index' ]);
         $orders_create  = Permission::create([ 'name' => 'orders.create' ]);
         $orders_show  = Permission::create([ 'name' => 'orders.show' ]);
@@ -47,18 +50,21 @@ class RoleSeeder extends Seeder
 
         $restaurant_role = Role::create([ 'name' => 'RESTAURANT' ])->syncPermissions([
             $dashboard,
-            $branches
+            $branches,
+            $user_profile
         ]);
 
         $branch_role = Role::create([ 'name' => 'BRANCH' ])->syncPermissions([
             $dashboard,
+            $user_profile,
             $waiters,
             $dishes,
             $orders_index,
             $orders_destroy
         ]);
 
-        Role::create([ 'name' => 'WAITER' ])->syncPermissions([
+        $waiter_role = Role::create([ 'name' => 'WAITER' ])->syncPermissions([
+            $user_profile,
             $orders_index,
             $orders_create,
             $orders_show,
@@ -88,7 +94,14 @@ class RoleSeeder extends Seeder
             'email' => 'suc1@example',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        ])->syncRoles($branch_role);;
+        ])->syncRoles($branch_role);
+
+        $waiter_user = User::create([
+            'name' => 'Camarero 1',
+            'email' => 'cam1@example',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ])->syncRoles($waiter_role);
 
 
         /*
@@ -119,7 +132,20 @@ class RoleSeeder extends Seeder
             'id' => $branch_user->id,
             'restaurant_id' => $restaurant_user->id,
             'code' => Str::upper(Str::random(5)),
-            'city' => 'bogotá'
+            'city' => 'Antioquia - Alejandría',
+            'address' => 'suc1-dir',
+            'telephone' => 'suc1-tel'
+        ]);
+
+
+        /*
+         * Creacion Waiters
+         */
+        Waiter::create([
+            'id' => $waiter_user->id,
+            'restaurant_id' => $restaurant_user->id,
+            'branch_id' => $branch_user->id,
+            'telephone' => 'cam1-tel'
         ]);
 
     }

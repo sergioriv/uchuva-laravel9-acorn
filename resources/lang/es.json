@@ -1,11 +1,34 @@
 {
+    "Wolcome": "Bienvenido",
+    "let's get started!": "Vamos a empezar!",
+    "Forgot": "Olvidó",
+    "Updated!" : "Actualizado!",
     "Add New" : "Agregar nuevo",
     "Telephone": "Teléfono",
+
+    "Restaurant": "Restaurante",
+    "Restaurant created!": "Restaurante creado!",
+    "Restaurant updated!": "Restaurante actualizado!",
+
     "Branches": "Sucursales",
     "Branch": "Sucursal",
     "Branches list": "Sucursales",
+    "Create branch": "Crear Sucursal",
+    "Branch created!": "Sucursal creada!",
+    "Branch updated!": "Sucursal actualizada!",
+
+    "Waiters": "Camareros",
+    "Waiters list": "Camareros",
+    "Create waiter": "Crear camarero",
+    "Waiter created!": "Camarero creado!",
+    "Waiter updated!": "Camarero actualizado!",
 
     "contact": "Contacto",
+    "Quantity": "Cantidad",
+    "Payments": "Pagos",
+    "Payment date": "Fecha de pago",
+    "Unsubscribe": "Fin de suscripción",
+    "Created at": "Fecha creación",
 
     "30 Days": "30 Días",
     "60 Days": "60 Días",

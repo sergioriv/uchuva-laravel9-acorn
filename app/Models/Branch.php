@@ -15,8 +15,7 @@ class Branch extends Model
         'code',
         'city',
         'address',
-        'telephone',
-        'image'
+        'telephone'
     ];
 
     protected $hidden = [

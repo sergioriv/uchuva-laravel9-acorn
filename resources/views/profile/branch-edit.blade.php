@@ -27,7 +27,7 @@ $title = $branch->user->name;
             <!-- Title Start -->
             <section class="scroll-section" id="title">
                 <div class="page-title-container">
-                    <h1 class="mb-0 pb-0 display-4">{{ $title . ' | ' . __('Branch') }}</h1>
+                    <h1 class="mb-0 pb-0 display-4">{{ $title . ' | ' . __('Edit') }}</h1>
                 </div>
             </section>
             <!-- Title End -->
@@ -39,7 +39,7 @@ $title = $branch->user->name;
                         <!-- Validation Errors -->
                         <x-validation-errors class="mb-4" :errors="$errors" />
 
-                        <form method="POST" action="{{ route('restaurant.branches.update', $branch) }}"
+                        <form method="POST" action="{{ route('user.profile.update') }}"
                             class="tooltip-end-bottom" enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
@@ -73,7 +73,7 @@ $title = $branch->user->name;
                                         <!-- Email -->
                                         <div class="mb-3">
                                             <x-label>{{ __('Email') }}</x-label>
-                                            <x-input id="email" name="email" value="{{ $branch->user->email }}"
+                                            <x-input disabled value="{{ $branch->user->email }}"
                                                 required />
                                         </div>
 

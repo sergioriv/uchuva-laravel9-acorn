@@ -224,6 +224,7 @@
             </li>
             @endcan
 
+
             {{-- RESTAURANT NAV --}}
             @can('branches')
             <li>
@@ -234,12 +235,27 @@
             </li>
             @endcan
 
-            {{-- <li>
+
+            {{-- BRANCHES NAV --}}
+            @can('waiters')
+            <li>
+                <a href="{{ route('branch.waiters.index') }}">
+                    <i class="bi-person-lines-fill icon icon-18"></i>
+                    <span class="label">{{ __('Waiters') }}</span>
+                </a>
+            </li>
+            @endcan
+
+
+            {{-- USER NAV --}}
+            @can('user.profile')
+            <li>
                 <a href="{{ route('user.profile') }}">
                     <i data-acorn-icon="user" class="icon" data-acorn-size="18"></i>
-                    <span class="label">{{ __('Branches') }}</span>
+                    <span class="label">{{ __('Profile') }}</span>
                 </a>
-            </li> --}}
+            </li>
+            @endcan
         </ul>
     </div>
     <!-- Menu End -->

@@ -88,16 +88,15 @@ return new class extends Migration
         });
 
         Schema::create('waiters', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('restaurant_id');
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('branch_id');
-            $table->string('name');
-            $table->string('email')->unique();
             $table->string('telephone')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->primary('id');
+
+            $table->foreign('id')
                     ->references('id')
                     ->on('users')
                     ->onUpdate('cascade')
