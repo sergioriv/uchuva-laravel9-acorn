@@ -83,6 +83,9 @@ class Scripts {
         if (typeof RowsAjaxWaiters !== "undefined") {
             const rowsAjaxWaiters = new RowsAjaxWaiters();
         }
+        if (typeof RowsAjaxCategories !== "undefined") {
+            const rowsAjaxCategories = new RowsAjaxCategories();
+        }
     }
 
     // Settings initialization

@@ -225,7 +225,7 @@
             @endcan
 
 
-            {{-- RESTAURANT NAV --}}
+            <!-- RESTAURANT NAV -->
             @can('branches')
             <li>
                 <a href="{{ route('restaurant.branches.index') }}">
@@ -234,9 +234,17 @@
                 </a>
             </li>
             @endcan
+            @can('categories')
+            <li>
+                <a href="{{ route('restaurant.categories.index') }}">
+                    <i class="bi-stickies icon icon-18"></i>
+                    <span class="label">{{ __('Categories') }}</span>
+                </a>
+            </li>
+            @endcan
 
 
-            {{-- BRANCHES NAV --}}
+            <!-- BRANCHES NAV -->
             @can('waiters')
             <li>
                 <a href="{{ route('branch.waiters.index') }}">
@@ -247,7 +255,7 @@
             @endcan
 
 
-            {{-- USER NAV --}}
+            <!-- USER NAV -->
             @can('user.profile')
             <li>
                 <a href="{{ route('user.profile') }}">

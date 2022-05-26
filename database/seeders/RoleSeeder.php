@@ -39,6 +39,7 @@ class RoleSeeder extends Seeder
         $branches  = Permission::create([ 'name' => 'branches' ]);
         $waiters  = Permission::create([ 'name' => 'waiters' ]);
         $dishes  = Permission::create([ 'name' => 'dishes' ]);
+        $categories  = Permission::create([ 'name' => 'categories' ]);
 
 
 
@@ -51,6 +52,7 @@ class RoleSeeder extends Seeder
         $restaurant_role = Role::create([ 'name' => 'RESTAURANT' ])->syncPermissions([
             $dashboard,
             $branches,
+            $categories,
             $user_profile
         ]);
 

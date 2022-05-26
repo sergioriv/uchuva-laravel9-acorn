@@ -10,11 +10,12 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'restaurant_id',
+        'name'
     ];
 
-    protected $hidden = [
-        'restaurant_id',
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:i:s',
     ];
 
     public function restaurant()

@@ -21,7 +21,7 @@ class TestSeeder extends Seeder
     public function run()
     {
 
-        // Permission::create([ 'name' => 'user.profile' ]);
+        // Permission::create([ 'name' => 'categories' ]);
 
     }
 }

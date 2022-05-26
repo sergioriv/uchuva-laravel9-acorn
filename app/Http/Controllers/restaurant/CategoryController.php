@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\restaurant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\support\UserController;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:categories');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('restaurant.categories.index');
+    }
+
+    public function data()
+    {
+        return ['data' => Category::where('restaurant_id', '=', $this->restaurant())->get()];
     }
 
     /**
@@ -25,7 +36,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('restaurant.categories.create');
     }
 
     /**
@@ -36,18 +47,23 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:20']
+        ]);
+
+        Category::create([
+            'restaurant_id' => $this->restaurant(),
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('restaurant.categories.index')->with(
+            ['notify' => 'success', 'title' => __('Category created!')],
+        );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function show(Category $category)
     {
-        //
+        return redirect()->route('restaurant.categories.edit', $category);
     }
 
     /**
@@ -58,7 +74,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('restaurant.categories.edit')->with('category', $category);
     }
 
     /**
@@ -70,17 +86,27 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:20']
+        ]);
+
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('restaurant.categories.index')->with(
+            ['notify' => 'success', 'title' => __('Category created!')],
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
+    private function restaurant()
     {
-        //
+        switch (UserController::role_auth()) {
+            case 'Restaurant':
+                return Auth::user()->id;
+
+            default:
+                return null;
+        }
     }
 }

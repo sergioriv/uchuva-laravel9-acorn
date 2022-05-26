@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ConfirmEmailController;
 use App\Http\Controllers\branch\WaiterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\restaurant\BranchController;
+use App\Http\Controllers\restaurant\CategoryController;
 use App\Http\Controllers\support\RestaurantController;
 use App\Http\Controllers\support\RoleController;
 use App\Http\Controllers\support\SubscriptionController;
@@ -61,8 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('waiters.json', [WaiterController::class, 'data']);
 
     /* Route Categories */
-    Route::resource('categories', WaiterController::class)->names('restaurant.categories');
-    Route::get('categories.json', [WaiterController::class, 'data']);
+    Route::resource('categories', CategoryController::class)->except('delete')->names('restaurant.categories');
+    Route::get('categories.json', [CategoryController::class, 'data']);
 });
 
 
