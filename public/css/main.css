@@ -1,7 +1,7 @@
 /* This file is reserved for overriding and extending the template styles. */
 
 /*
- * Logo Uchuva
+ * Logo Nav Uchuva
 */
 html[data-color^=light-][data-navcolor=light] .logo .img-uchuva {
     background-image: url('../img/logo/logo-uchuva-light.svg') !important;
@@ -27,6 +27,20 @@ html[data-color^=light-] .logo .img-uchuva {
 html[data-color^=dark-] .logo .img-uchuva {
     background-image: url('../img/logo/uchuva-light.svg') !important;
 }
+
+/*
+ * Logo Lobby Uchuva
+ */
+html[data-color^=light-] .logo-default.img-uchuva {
+    background-image: url('../img/logo/logo-uchuva-light.svg') !important;
+}
+html[data-color^=dark-] .logo-default.img-uchuva {
+    background-image: url('../img/logo/logo-uchuva-dark.svg') !important;
+}
+html[data-color=] .logo-default.img-uchuva {
+    background-image: url('../img/logo/logo-uchuva-light.svg') !important;
+}
+
 
 /*
  * Loading start
