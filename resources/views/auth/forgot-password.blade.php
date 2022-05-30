@@ -21,7 +21,7 @@ $description = 'Forgot Password Page'
     <div class="sw-lg-50 px-5">
         <div class="sh-11">
             <a href="/">
-                <div class="logo-default"></div>
+                <div class="logo-default img-uchuva"></div>
             </a>
         </div>
         <div class="mb-5">

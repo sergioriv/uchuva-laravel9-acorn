@@ -14531,7 +14531,7 @@ html[data-placement=horizontal] .nav-container .logo img,
 html[data-placement=horizontal] .nav-container .logo .img,
 html[data-placement=vertical] .nav-container .logo img,
 html[data-placement=vertical] .nav-container .logo .img {
-  width: 100px;
+  width: 130px;
   min-height: 35px;
   -o-object-position: left;
      object-position: left;
@@ -14839,7 +14839,7 @@ html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .l
 html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .logo a {
   overflow: hidden;
   display: inline-block;
-  width: 100px;
+  width: 130px;
 }
 html[data-placement=vertical] .nav-container .nav-content .language-switch-container,
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .language-switch-container,
