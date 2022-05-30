@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+  - export PATH=/home/mantizte/mi.uchuva.app/
+  - /bin/rsync -av public/ $PATH
