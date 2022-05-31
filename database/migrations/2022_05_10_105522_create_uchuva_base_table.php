@@ -15,9 +15,6 @@ return new class extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
-            // $table->unsignedBigInteger('user_id');
-            // $table->string('name');
-            // $table->string('email')->unique();
             $table->string('nit', 20);
             $table->string('telephone', 20)->nullable();
             $table->dateTime('unsubscribe');
@@ -63,9 +60,6 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('restaurant_id');
-            // $table->unsignedBigInteger('user_id');
-            // $table->string('name');
-            // $table->string('email')->unique();
             $table->tinyText('code');
             $table->tinyText('city');
             $table->string('address')->nullable();
