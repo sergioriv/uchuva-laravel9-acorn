@@ -51,7 +51,7 @@ class WaiterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'email', 'max:255', 'unique:App\Models\User,email'],
             'telephone' => ['required', 'string', 'max:20']
@@ -61,10 +61,12 @@ class WaiterController extends Controller
 
         $user = UserController::_create($request->name, $request->email, 4, $avatar);
 
+        $parents = $this->parents()[0];
+
         Waiter::create([
             'id' => $user->id,
-            'restaurant_id' => $this->parents()[0]->restaurant_id,
-            'branch_id' => $this->parents()[0]->id,
+            'restaurant_id' => $parents->restaurant_id,
+            'branch_id' => $parents->id,
             'telephone' => $request->telephone
         ]);
 
@@ -106,7 +108,7 @@ class WaiterController extends Controller
     public function update(Request $request, Waiter $waiter)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'telephone' => ['required', 'string', 'max:20']
         ]);
@@ -150,7 +152,7 @@ class WaiterController extends Controller
     public static function profile_update(Request $request, Waiter $waiter)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'telephone' => ['required', 'string', 'max:20']
         ]);

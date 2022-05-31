@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ConfirmEmailController;
+use App\Http\Controllers\branch\DishController;
 use App\Http\Controllers\branch\WaiterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\restaurant\BranchController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\support\RestaurantController;
 use App\Http\Controllers\support\RoleController;
 use App\Http\Controllers\support\SubscriptionController;
 use App\Http\Controllers\support\UserController;
+use App\Http\Controllers\waiter\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +66,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /* Route Categories */
     Route::resource('categories', CategoryController::class)->except('delete')->names('restaurant.categories');
     Route::get('categories.json', [CategoryController::class, 'data']);
+
+    /* Route Dishes */
+    Route::resource('dishes', DishController::class)->except('show','delete')->names('branch.dishes');
+    Route::get('dishes.json', [DishController::class, 'data']);
+
+    /* Route Orders */
+    Route::resource('orders', OrderController::class)->except('delete')->names('waiter.orders');
+    Route::get('orders.json', [OrderController::class, 'data']);
 });
 
 

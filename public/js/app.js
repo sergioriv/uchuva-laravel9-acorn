@@ -41,7 +41,12 @@ function callNotify(type = "success", title, message = "") {
 
 if (jQuery().select2) {
     jQuery.fn.select2.defaults.set("theme", "bootstrap4");
-    jQuery(".kii_select2").select2({ minimumResultsForSearch: Infinity });
+    // jQuery(".kii_select2").select2({ minimumResultsForSearch: Infinity });
 }
 
+function DataTableInterval(datatable) {
+    setInterval(() => {
+        jQuery(datatable).DataTable().ajax.reload();
+    }, 2000);
+}
 

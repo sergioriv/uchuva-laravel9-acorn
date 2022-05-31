@@ -245,6 +245,14 @@
 
 
             <!-- BRANCHES NAV -->
+            @can('dishes')
+            <li>
+                <a href="{{ route('branch.dishes.index') }}">
+                    <i data-acorn-icon="main-course" class="icon" data-acorn-size="18"></i>
+                    <span class="label">{{ __('Dishes') }}</span>
+                </a>
+            </li>
+            @endcan
             @can('waiters')
             <li>
                 <a href="{{ route('branch.waiters.index') }}">

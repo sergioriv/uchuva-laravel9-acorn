@@ -34,12 +34,22 @@
     "Category created!": "Categoria creada!",
     "Category updated!": "Categoria actualizada!",
 
+    "Menu": "Menú",
+    "Dish": "Plato",
+    "Dishes": "Platos",
+    "Dishes list": "Platos",
+    "Create dish": "Crear plato",
+    "Dish created!": "Plato creado!",
+    "Dish updated!": "Plato actualizado!",
+
     "contact": "Contacto",
     "Quantity": "Cantidad",
     "Payments": "Pagos",
     "Payment date": "Fecha de pago",
     "Unsubscribe": "Fin de suscripción",
     "Created at": "Fecha creación",
+    "Available": "Disponible",
+    "Description": "Descripción",
 
     "30 Days": "30 Días",
     "60 Days": "60 Días",

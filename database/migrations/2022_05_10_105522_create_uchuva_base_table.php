@@ -125,17 +125,24 @@ return new class extends Migration
         Schema::create('dishes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
+            $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->string('description')->nullable();
             $table->unsignedDouble('price', 8, 2);
             $table->unsignedMediumInteger('quality')->default(0);
-            $table->boolean('available')->default(FALSE);
+            $table->boolean('available')->nullable()->default(FALSE);
             $table->timestamps();
 
             $table->foreign('restaurant_id')
                     ->references('id')
                     ->on('restaurants')
+                    ->onUpdate('restrict')
+                    ->onDelete('restrict');
+
+            $table->foreign('branch_id')
+                    ->references('id')
+                    ->on('branches')
                     ->onUpdate('restrict')
                     ->onDelete('restrict');
 
@@ -152,7 +159,7 @@ return new class extends Migration
             $table->unsignedBigInteger('table_id');
             $table->unsignedBigInteger('waiter_id');
             $table->tinyText('code');
-            $table->boolean('finished')->default(FALSE);
+            $table->boolean('finished')->nullable()->default(FALSE);
             $table->unsignedDouble('total', 8, 2);
             $table->timestamps();
 

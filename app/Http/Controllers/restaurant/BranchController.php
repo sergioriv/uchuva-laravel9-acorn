@@ -57,7 +57,7 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'email', 'max:255', 'unique:App\Models\User,email'],
             'telephone' => ['required', 'string', 'max:20'],
@@ -119,7 +119,7 @@ class BranchController extends Controller
     public function update(Request $request, Branch $branch)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'telephone' => ['required', 'string', 'max:20'],
             'city'      => ['required', 'string', 'max:100'],
@@ -162,7 +162,7 @@ class BranchController extends Controller
     public static function profile_update(Request $request, Branch $branch)
     {
         $request->validate([
-            'avatar'     => ['image', 'max:2024'],
+            'avatar'     => ['image', 'max:2048'],
             'name'      => ['required', 'string', 'max:255'],
             'telephone' => ['required', 'string', 'max:20'],
             'city'      => ['required', 'string', 'max:100'],

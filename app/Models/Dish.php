@@ -10,16 +10,14 @@ class Dish extends Model
     use HasFactory;
 
     protected $fillable = [
+        'restaurant_id',
+        'branch_id',
+        'category_id',
         'name',
         'description',
         'price',
         'quality',
         'available'
-    ];
-
-    protected $hidden = [
-        'restaurant_id',
-        'category_id'
     ];
 
     public function restaurant()
@@ -29,6 +27,6 @@ class Dish extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->select('id', 'name');
     }
 }

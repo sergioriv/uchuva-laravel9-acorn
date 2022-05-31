@@ -64,7 +64,7 @@ $title = __('Create restaurant');
                             <div class="mb-3">
                                 <x-label>{{ __('Subscription') . ' (' . __('Months') . ')' }}</x-label>
                                 <div class="input-group spinner" data-trigger="spinner">
-                                    <input type="text" class="form-control text-center" id="subscription" name="subscription" value="1" data-rule="quantity" />
+                                    <x-input type="text" class="text-center" id="subscription" name="subscription" value="1" data-rule="quantity" />
                                     <div class="input-group-text">
                                         <button type="button" class="spin-up" data-spin="up">
                                             <span class="arrow"></span>

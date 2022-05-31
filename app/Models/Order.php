@@ -10,15 +10,15 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'restaurant_id',
+        'table_id',
+        'waiter_id',
         'code',
         'finished',
         'total',
     ];
 
     protected $hidden = [
-        'restaurant_id',
-        'table_id',
-        'waiter_id',
     ];
 
     public function restaurant()
