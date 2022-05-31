@@ -3,7 +3,3 @@ deployment:
   tasks:
   - export PATH=/home/mantizte/mi.uchuva.app/
   - /bin/rsync -a --exclude 'index.php' public/ $PATH
-  - php artisan migrate:fresh --seed
-  - php artisan route:clear
-  - php artisan view:clear
-  - php artisan config:clear
