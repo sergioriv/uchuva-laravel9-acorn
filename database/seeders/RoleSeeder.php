@@ -40,6 +40,7 @@ class RoleSeeder extends Seeder
         $waiters  = Permission::create([ 'name' => 'waiters' ]);
         $dishes  = Permission::create([ 'name' => 'dishes' ]);
         $categories  = Permission::create([ 'name' => 'categories' ]);
+        $tables  = Permission::create([ 'name' => 'tables' ]);
 
 
 
@@ -61,6 +62,7 @@ class RoleSeeder extends Seeder
             $user_profile,
             $waiters,
             $dishes,
+            $tables,
             $orders_index,
             $orders_destroy
         ]);

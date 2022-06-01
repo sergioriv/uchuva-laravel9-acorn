@@ -261,6 +261,25 @@
                 </a>
             </li>
             @endcan
+            @can('tables')
+            <li>
+                <a href="{{ route('branch.tables.index') }}">
+                    <i class="bi-list-ol icon icon-18"></i>
+                    <span class="label">{{ __('Tables') }}</span>
+                </a>
+            </li>
+            @endcan
+
+
+            <!-- WAITERS & BRANCHES NAV -->
+            @can('orders.index')
+            <li>
+                <a href="{{ route('waiter.orders.index') }}">
+                    <i class="bi-list-nested icon icon-18"></i>
+                    <span class="label">{{ __('Orders') }}</span>
+                </a>
+            </li>
+            @endcan
 
 
             <!-- USER NAV -->

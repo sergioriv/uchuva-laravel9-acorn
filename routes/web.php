@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\ConfirmEmailController;
 use App\Http\Controllers\branch\DishController;
+use App\Http\Controllers\branch\TableController;
 use App\Http\Controllers\branch\WaiterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\restaurant\BranchController;
@@ -70,6 +71,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /* Route Dishes */
     Route::resource('dishes', DishController::class)->except('show','delete')->names('branch.dishes');
     Route::get('dishes.json', [DishController::class, 'data']);
+
+    /* Route Tables */
+    Route::resource('tables', TableController::class)->except('show','delete')->names('branch.tables');
+    Route::get('tables.json', [TableController::class, 'data']);
 
     /* Route Orders */
     Route::resource('orders', OrderController::class)->except('delete')->names('waiter.orders');

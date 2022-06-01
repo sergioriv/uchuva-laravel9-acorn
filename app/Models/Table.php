@@ -10,16 +10,24 @@ class Table extends Model
     use HasFactory;
 
     protected $fillable = [
+        'restaurant_id',
+        'branch_id',
         'reference',
     ];
 
-    protected $hidden = [
-        'restaurant_id'
+    protected $casts = [
+        'created_at'    => 'datetime:Y-m-d h:i:s',
+        'updated_at'    => 'datetime:Y-m-d h:i:s',
     ];
 
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function orders()

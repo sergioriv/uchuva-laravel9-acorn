@@ -89,6 +89,9 @@ class Scripts {
         if (typeof RowsAjaxDishes !== "undefined") {
             const rowsAjaxDishes = new RowsAjaxDishes();
         }
+        if (typeof RowsAjaxTables !== "undefined") {
+            const rowsAjaxTables = new RowsAjaxTables();
+        }
     }
 
     // Settings initialization

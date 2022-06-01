@@ -112,6 +112,7 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
+            $table->unsignedBigInteger('branch_id');
             $table->string('reference');
             $table->timestamps();
 
@@ -120,6 +121,12 @@ return new class extends Migration
                     ->on('restaurants')
                     ->onUpdate('restrict')
                     ->onDelete('restrict');
+
+            $table->foreign('branch_id')
+                    ->references('id')
+                    ->on('branches')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
 
         Schema::create('dishes', function (Blueprint $table) {
@@ -153,7 +160,7 @@ return new class extends Migration
                     ->onDelete('restrict');
         });
 
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
             $table->unsignedBigInteger('table_id');
@@ -193,7 +200,7 @@ return new class extends Migration
 
             $table->foreign('order_id')
                     ->references('id')
-                    ->on('order')
+                    ->on('orders')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
@@ -220,7 +227,7 @@ return new class extends Migration
         Schema::dropIfExists('waiters');
         Schema::dropIfExists('tables');
         Schema::dropIfExists('dishes');
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
         Schema::dropIfExists('order_dishes');
     }
 };

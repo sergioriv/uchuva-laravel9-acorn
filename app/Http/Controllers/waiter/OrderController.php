@@ -3,11 +3,23 @@
 namespace App\Http\Controllers\waiter;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\support\UserController;
 use App\Models\Order;
+use App\Models\Table;
+use App\Models\Waiter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:orders.index')->only('index');
+        $this->middleware('can:orders.create')->only('create');
+        $this->middleware('can:orders.show')->only('show');
+        $this->middleware('can:orders.edit')->only('edit');
+        $this->middleware('can:orders.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('waiter.orders.index');
+    }
+
+    public function data()
+    {
+        return ['data' => Order::with('table')->where('waiter_id', '=', $this->parents()[0]->id)->get()];
     }
 
     /**
@@ -25,7 +42,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        // $tables = Table::where('restaurant_id', '=', $this->parents()[0]->restaurant_id)->get();
+        // return view('branch.dishes.create')->with('categories', $categories);
     }
 
     /**
@@ -82,5 +100,17 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+
+    private function parents()
+    {
+        switch (UserController::role_auth()) {
+            case 'Waiter':
+                return Waiter::findOrFail(Auth::user()->id)->select('id', 'restaurant_id', 'branch_id')->get();
+
+            default:
+                return null;
+        }
     }
 }

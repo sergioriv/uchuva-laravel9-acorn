@@ -25,6 +25,11 @@ class Dish extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class)->select('id', 'name');
