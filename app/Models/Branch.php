@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Branch extends CastCreateModel
 {
     use HasFactory;
 
@@ -16,9 +16,6 @@ class Branch extends Model
         'city',
         'address',
         'telephone'
-    ];
-
-    protected $hidden = [
     ];
 
     public function user()

@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderDish extends Model
+class OrderDish extends CastCreateModel
 {
     use HasFactory;
 
     protected $fillable = [
+        'order_id',
+        'dish_id',
         'price',
         'quality',
         'note'
-    ];
-
-    protected $hidden = [
-        'order_id',
-        'dish_id'
     ];
 
     public function order()

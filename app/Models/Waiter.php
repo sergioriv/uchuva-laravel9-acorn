@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Waiter extends Model
+class Waiter extends CastCreateModel
 {
     use HasFactory;
 
@@ -14,10 +14,6 @@ class Waiter extends Model
         'restaurant_id',
         'branch_id',
         'telephone'
-    ];
-
-    protected $hidden = [
-
     ];
 
     public function user()

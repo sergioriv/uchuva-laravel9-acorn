@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Table extends Model
+class Table extends CastCreateModel
 {
     use HasFactory;
 
@@ -13,11 +15,6 @@ class Table extends Model
         'restaurant_id',
         'branch_id',
         'reference',
-    ];
-
-    protected $casts = [
-        'created_at'    => 'datetime:Y-m-d h:i:s',
-        'updated_at'    => 'datetime:Y-m-d h:i:s',
     ];
 
     public function restaurant()

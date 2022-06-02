@@ -5,10 +5,13 @@ $title = __('Create payment');
 
 @section('css')
 <link rel="stylesheet" href="/css/vendor/bootstrap-datepicker3.standalone.min.css" />
+<link rel="stylesheet" href="/css/vendor/select2.min.css" />
+<link rel="stylesheet" href="/css/vendor/select2-bootstrap4.min.css" />
 @endsection
 
 @section('js_vendor')
 <script src="/js/cs/scrollspy.js"></script>
+<script src="/js/vendor/select2.full.min.js"></script>
 <script src="/js/vendor/input-spinner.min.js"></script>
 <script src="/js/vendor/datepicker/bootstrap-datepicker.min.js"></script>
 <script src="/js/vendor/datepicker/locales/bootstrap-datepicker.es.min.js"></script>

@@ -104,3 +104,9 @@ input[type="file"] {
 .no-padding-right {
     padding-right: 0 !important;
 }
+.data-table-rows table.table-order tbody tr {
+    box-shadow: none !important;
+}
+.table-order td {
+    border-bottom: 1px solid var(--muted) !important;
+}

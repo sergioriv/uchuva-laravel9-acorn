@@ -4,9 +4,13 @@ namespace App\Http\Controllers\waiter;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\support\UserController;
+use App\Models\Category;
+use App\Models\Dish;
 use App\Models\Order;
 use App\Models\Table;
 use App\Models\Waiter;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +36,13 @@ class OrderController extends Controller
 
     public function data()
     {
-        return ['data' => Order::with('table')->where('waiter_id', '=', $this->parents()[0]->id)->get()];
+        return ['data' => Order::with('table')
+                ->select('id','table_id','code','total','created_at')
+                ->where('waiter_id', '=', $this->parents()[0]->id)
+                ->whereNull('finished')
+                ->orderBy('id', 'DESC')
+                ->get()
+        ];
     }
 
     /**
@@ -42,8 +52,14 @@ class OrderController extends Controller
      */
     public function create()
     {
-        // $tables = Table::where('restaurant_id', '=', $this->parents()[0]->restaurant_id)->get();
-        // return view('branch.dishes.create')->with('categories', $categories);
+        $parents = $this->parents()[0];
+        $tables = Table::where('branch_id', '=', $parents->branch_id)->get();
+        $categories = Category::with('dishes')
+            ->whereHas('dishes', function (Builder $query) {
+                $query->whereNotNull('available');
+            })
+            ->where('restaurant_id', '=', $parents->restaurant_id)->get();
+        return view('waiter.orders.create')->with(['tables' => $tables, 'categories' => $categories]);
     }
 
     /**

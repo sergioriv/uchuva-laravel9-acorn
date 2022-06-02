@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subscription extends Model
+class Subscription extends CastCreateModel
 {
     use HasFactory;
 
@@ -17,13 +19,12 @@ class Subscription extends Model
     ];
 
     protected $casts = [
-        'payment_date'  => 'datetime:Y-m-d h:i:s',
-        'unsubscribe'   => 'datetime:Y-m-d',
-        'created_at'    => 'datetime:Y-m-d h:i:s',
-        'updated_at'    => 'datetime:Y-m-d h:i:s',
+        'payment_date' => 'datetime:Y-m-d',
+        'unsubscribe' => 'datetime:Y-m-d',
     ];
 
     public function restaurant(){
         return $this->belongsTo(Restaurant::class);
     }
+
 }

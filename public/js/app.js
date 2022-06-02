@@ -1,12 +1,4 @@
-// require('./bootstrap');
-
-// import Alpine from 'alpinejs';
-
-// window.Alpine = Alpine;
-
-// Alpine.start();
-
-// $( document ).ready(function() {
+const lang = $('html').attr('lang');
 
 function callNotify(type = "success", title, message = "") {
     let icon = "cs-check";

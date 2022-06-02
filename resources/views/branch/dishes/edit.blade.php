@@ -113,7 +113,7 @@ $title = $dish->name;
                                 </div>
                             </div>
 
-                            <x-button type="submit" class="btn-primary">{{ __('Create') }}</x-button>
+                            <x-button type="submit" class="btn-primary">{{ __('Update') }}</x-button>
 
                         </form>
                     </div>

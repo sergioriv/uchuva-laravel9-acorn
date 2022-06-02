@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class Restaurant extends CastCreateModel
 {
     use HasFactory;
 
@@ -17,12 +17,8 @@ class Restaurant extends Model
         'unsubscribe',
     ];
 
-    protected $hidden = [
-    ];
-
     protected $casts = [
-        'unsubscribe' => 'datetime:Y-m-d h:i:s',
-        'created_at' => 'datetime:Y-m-d h:i:s',
+        'unsubscribe' => 'datetime:Y-m-d',
     ];
 
     public function user()

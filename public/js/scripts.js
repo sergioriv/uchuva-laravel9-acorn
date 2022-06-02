@@ -92,6 +92,9 @@ class Scripts {
         if (typeof RowsAjaxTables !== "undefined") {
             const rowsAjaxTables = new RowsAjaxTables();
         }
+        if (typeof RowsAjaxOrders !== "undefined") {
+            const rowsAjaxOrders = new RowsAjaxOrders();
+        }
     }
 
     // Settings initialization

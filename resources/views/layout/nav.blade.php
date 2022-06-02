@@ -276,7 +276,7 @@
             <li>
                 <a href="{{ route('waiter.orders.index') }}">
                     <i class="bi-list-nested icon icon-18"></i>
-                    <span class="label">{{ __('Orders') }}</span>
+                    <span class="label">{{ __('Backorders') }}</span>
                 </a>
             </li>
             @endcan
