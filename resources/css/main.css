@@ -108,5 +108,9 @@ input[type="file"] {
     box-shadow: none !important;
 }
 .table-order td {
-    border-bottom: 1px solid var(--muted) !important;
+    line-height: 1.5rem;
+}
+
+.table-order tr:not(:first-child) td {
+    padding-top: 2rem !important;
 }

@@ -7,7 +7,7 @@ $title = __('Create order');
 @endsection
 
 @section('js_vendor')
-    <script src="/js/vendor/input-spinner.min.js"></script>
+<script src="/js/vendor/input-spinner.min.js"></script>
 @endsection
 
 @section('js_page')
@@ -38,8 +38,8 @@ $title = __('Create order');
                 <!-- Validation Errors -->
                 <x-validation-errors class="mb-4" :errors="$errors" />
 
-                {{-- <form method="POST" action="{{ route('waiter.orders.create') }}" class="tooltip-end-bottom" novalidate --}}
-                    {{-- autocomplete="off"> --}}
+                {{-- <form method="POST" action="{{ route('waiter.orders.create') }}" class="tooltip-end-bottom"
+                    novalidate --}} {{-- autocomplete="off"> --}}
                     {{-- @csrf --}}
 
 
@@ -70,35 +70,39 @@ $title = __('Create order');
                         <div class="mb-n2" id="accordionCardsCategories">
                             @foreach ($categories as $category)
                             <div class="card d-flex mb-2">
-                                <div
-                                        class="d-flex flex-grow-1"
-                                        role="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapse{{ $category->id }}"
-                                        aria-expanded="true"
-                                        aria-controls="collapse{{ $category->id }}"
-                                >
+                                <div class="d-flex flex-grow-1" role="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ $category->id }}" aria-expanded="true"
+                                    aria-controls="collapse{{ $category->id }}">
                                     <div class="card-body py-4">
-                                        <div class="btn btn-link list-item-heading p-0 text-uppercase">{{ $category->name }}</div>
+                                        <div class="btn btn-link list-item-heading p-0 text-uppercase">{{
+                                            $category->name }}</div>
                                     </div>
                                 </div>
-                                <div id="collapse{{ $category->id }}" class="collapse" data-bs-parent="#accordionCardsCategories">
+                                <div id="collapse{{ $category->id }}" class="collapse"
+                                    data-bs-parent="#accordionCardsCategories">
                                     <div class="card-body accordion-content pt-0">
                                         <div class="data-table-rows slim">
-                                            <table class="data-table nowrap w-100 dataTable no-footer table-order">
+                                            <table
+                                                class="data-table nowrap w-100 dataTable no-footer text-center table-order">
                                                 <tbody>
                                                     @foreach ($category->dishes as $dish)
                                                     <tr>
-                                                        <td>{{ $dish->name }}</td>
-                                                        <td>@money($dish->price)</td>
                                                         <td>
+                                                            <text class="h4">{{ $dish->name }}</text>
+                                                            <br>
+                                                            <text class="text-small">@money($dish->price)</text>
+                                                            <br>
+
                                                             <div class="input-group spinner" data-trigger="spinner">
                                                                 <div class="input-group-text">
-                                                                    <button type="button" class="spin-down single" data-spin="down">-</button>
+                                                                    <button type="button" class="spin-down single"
+                                                                        data-spin="down">-</button>
                                                                 </div>
-                                                                <input type="text" class="form-control text-center" value="0" data-min="0" data-rule="quantity" />
+                                                                <input type="text" class="form-control text-center"
+                                                                    value="0" data-min="0" data-rule="quantity" />
                                                                 <div class="input-group-text">
-                                                                    <button type="button" class="spin-up single" data-spin="up">+</button>
+                                                                    <button type="button" class="spin-up single"
+                                                                        data-spin="up">+</button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -116,7 +120,8 @@ $title = __('Create order');
 
                     {{-- <x-button type="submit" class="btn-primary">{{ __('Create') }}</x-button> --}}
 
-                {{-- </form> --}}
+                    {{--
+                </form> --}}
             </section>
 
         </div>
