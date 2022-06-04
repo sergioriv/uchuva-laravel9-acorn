@@ -7,8 +7,11 @@ use App\Http\Controllers\support\UserController;
 use App\Models\Category;
 use App\Models\Dish;
 use App\Models\Order;
+use App\Models\OrderDish;
 use App\Models\Table;
 use App\Models\Waiter;
+use Illuminate\Support\Str;
+use App\Rules\TablesExistRule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -54,11 +57,7 @@ class OrderController extends Controller
     {
         $parents = $this->parents()[0];
         $tables = Table::where('branch_id', '=', $parents->branch_id)->get();
-        $categories = Category::with('dishes')
-            ->whereHas('dishes', function (Builder $query) {
-                $query->whereNotNull('available');
-            })
-            ->where('restaurant_id', '=', $parents->restaurant_id)->get();
+        $categories = $this->dishes_categories();
         return view('waiter.orders.create')->with(['tables' => $tables, 'categories' => $categories]);
     }
 
@@ -70,7 +69,57 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'table' => ['required', 'numeric', 'min:0', new TablesExistRule()]
+        ]);
+
+        $parents = $this->parents()[0];
+
+        $order = Order::create([
+            'restaurant_id' => $parents->restaurant_id,
+            'table_id'      => $request->table,
+            'waiter_id'     => $parents->id,
+            'code'          => Str::upper(Str::random(8)),
+            'total'         => 0
+        ]);
+
+        $totalOrden = 0;
+
+        $categories = $this->dishes_categories();
+        foreach ($categories as $category) {
+            foreach ($category->dishes as $dish) {
+                if ($dish->available != NULL)
+                {
+                    $dish_quality = 'dish-quality-' . $dish->id;
+
+                    if ( $request->$dish_quality > 0 )
+                    {
+                        $dish_price = 'dish-price-' . $dish->id;
+                        $dish_note = 'dish-note-' . $dish->id;
+
+                        $totalOrden += ($request->$dish_quality * $request->$dish_price);
+
+                        OrderDish::create([
+                            'order_id' => $order->id,
+                            'dish_id' => $dish->id,
+                            'price' => $request->$dish_price,
+                            'quality' => $request->$dish_quality,
+                            'note' => $request->$dish_note
+                        ]);
+
+                    }
+                }
+            }
+        }
+
+        $order->update([
+            'total' => $totalOrden
+        ]);
+
+        return redirect()->route('waiter.orders.index')->with(
+            ['notify' => 'success', 'title' => __('Order created!')],
+        );
     }
 
     /**
@@ -128,5 +177,15 @@ class OrderController extends Controller
             default:
                 return null;
         }
+    }
+
+    private function dishes_categories()
+    {
+        $parents = $this->parents()[0];
+        return Category::with('dishes')
+            ->whereHas('dishes', function (Builder $query) {
+                $query->whereNotNull('available');
+            })
+            ->where('restaurant_id', '=', $parents->restaurant_id)->get();
     }
 }

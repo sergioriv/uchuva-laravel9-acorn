@@ -7397,7 +7397,6 @@ button {
     border-top-right-radius: initial;
     border-bottom-right-radius: initial;
   }
-
   .list-group-horizontal-sm > .list-group-item:last-child {
     border-top-left-radius: initial;
     border-bottom-left-radius: initial;
@@ -7412,7 +7411,6 @@ button {
     border-top-right-radius: initial;
     border-bottom-right-radius: initial;
   }
-
   .list-group-horizontal-md > .list-group-item:last-child {
     border-top-left-radius: initial;
     border-bottom-left-radius: initial;
@@ -7427,7 +7425,6 @@ button {
     border-top-right-radius: initial;
     border-bottom-right-radius: initial;
   }
-
   .list-group-horizontal-lg > .list-group-item:last-child {
     border-top-left-radius: initial;
     border-bottom-left-radius: initial;
@@ -7442,7 +7439,6 @@ button {
     border-top-right-radius: initial;
     border-bottom-right-radius: initial;
   }
-
   .list-group-horizontal-xl > .list-group-item:last-child {
     border-top-left-radius: initial;
     border-bottom-left-radius: initial;
@@ -7457,7 +7453,6 @@ button {
     border-top-right-radius: initial;
     border-bottom-right-radius: initial;
   }
-
   .list-group-horizontal-xxl > .list-group-item:last-child {
     border-top-left-radius: initial;
     border-bottom-left-radius: initial;
@@ -15869,14 +15864,12 @@ html:not([data-footer=true]) #root > footer {
   * {
     transition: initial !important;
   }
-
   body,
 html,
 main {
     padding: 0 !important;
     margin: 0 !important;
   }
-
   .settings-buttons-container,
 #settingsButton,
 #nichesButton,
@@ -15885,11 +15878,9 @@ main {
 footer {
     display: none !important;
   }
-
   a {
     text-decoration: initial !important;
   }
-
   .card.card-print {
     margin: initial !important;
     box-shadow: initial !important;
@@ -15897,7 +15888,6 @@ footer {
   .card.card-print .card-body {
     padding: 0 !important;
   }
-
   main.print-restricted .container {
     padding-right: 0 !important;
     padding-left: 0 !important;
@@ -15905,7 +15895,6 @@ footer {
   main.print-restricted .container > *:not(.print-me) {
     display: none;
   }
-
   html[data-placement=horizontal] main,
 html[data-placement=vertical] main {
     padding: 0 !important;

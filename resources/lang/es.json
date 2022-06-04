@@ -67,6 +67,9 @@
     "Description": "Descripción",
     "Reference": "Referencia",
     "The reference must be 3 characters max, contain letters and numbers.": "La referencia debe tener un máximo de 3 caracteres, contener letras y números.",
+    "add note": "agregar nota",
+
+    "The table was not found.": "La mesa no fue encontrada.",
 
     "30 Days": "30 Días",
     "60 Days": "60 Días",

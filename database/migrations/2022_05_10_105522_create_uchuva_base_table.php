@@ -166,7 +166,7 @@ return new class extends Migration
             $table->unsignedBigInteger('table_id');
             $table->unsignedBigInteger('waiter_id');
             $table->tinyText('code');
-            $table->boolean('finished')->nullable()->default(FALSE);
+            $table->boolean('finished')->nullable();
             $table->unsignedDouble('total', 8, 2);
             $table->timestamps();
 
@@ -195,7 +195,7 @@ return new class extends Migration
             $table->unsignedBigInteger('dish_id');
             $table->unsignedDouble('price', 8, 2);
             $table->unsignedMediumInteger('quality');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
 
             $table->foreign('order_id')
