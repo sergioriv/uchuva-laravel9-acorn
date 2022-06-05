@@ -16,15 +16,12 @@ $title = __('Create order');
         jQuery('#table').val( $(this).data('id') );
         $('.add-table .card').removeClass('border border-primary');
         $(this).children('.card').addClass('border border-primary');
-
     });
 
     function note_dish(val, id)
     {
-        if( val > 0 )
-            $( '#note-' + id ).removeClass('d-none');
-        else
-            $( '#note-' + id ).addClass('d-none').children('textarea').val('');
+        val > 0 ? $( '#note-' + id ).removeClass('d-none')
+                : $( '#note-' + id ).addClass('d-none').children('textarea').val('');
     }
 
     jQuery('.dish-quality').keyup(function () {
@@ -38,8 +35,6 @@ $title = __('Create order');
 
         note_dish( dishQuality, $(this).data('id') );
     });
-
-
 
 </script>
 @endsection
@@ -110,6 +105,8 @@ $title = __('Create order');
                                        @if ($dish->available != NULL)
                                        <tr>
                                           <td>
+                                             <text class="h6">{{ $dish->quality }}</text>
+                                             <br>
                                              <text class="h4">{{ $dish->name }}</text>
                                              <br>
                                              <text class="text-small">@money($dish->price)</text>
