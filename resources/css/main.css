@@ -3,53 +3,52 @@
 /*
  * Logo Nav Uchuva
 */
-html[data-color^=light-][data-navcolor=light] .logo .img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-light.svg') !important;
+html[data-color^="light-"][data-navcolor="light"] .logo .img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-light.svg") !important;
 }
-html[data-color^=dark-][data-navcolor=dark] .logo .img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-dark.svg') !important;
+html[data-color^="dark-"][data-navcolor="dark"] .logo .img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-dark.svg") !important;
 }
-html[data-color^=light-][data-navcolor=dark] .logo .img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-dark.svg') !important;
+html[data-color^="light-"][data-navcolor="dark"] .logo .img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-dark.svg") !important;
 }
-html[data-color^=dark-][data-navcolor=light] .logo .img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-light.svg') !important;
+html[data-color^="dark-"][data-navcolor="light"] .logo .img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-light.svg") !important;
 }
-html[data-color^=light-][data-navcolor=default] .logo .img-uchuva {
-    background-image: url('../img/logo/uchuva-light.svg') !important;
+html[data-color^="light-"][data-navcolor="default"] .logo .img-uchuva {
+    background-image: url("../img/logo/uchuva-light.svg") !important;
 }
-html[data-color^=dark-][data-navcolor=default] .logo .img-uchuva {
-    background-image: url('../img/logo/uchuva-light.svg') !important;
+html[data-color^="dark-"][data-navcolor="default"] .logo .img-uchuva {
+    background-image: url("../img/logo/uchuva-light.svg") !important;
 }
-html[data-color^=light-] .logo .img-uchuva {
-    background-image: url('../img/logo/uchuva-light.svg') !important;
+html[data-color^="light-"] .logo .img-uchuva {
+    background-image: url("../img/logo/uchuva-light.svg") !important;
 }
-html[data-color^=dark-] .logo .img-uchuva {
-    background-image: url('../img/logo/uchuva-light.svg') !important;
+html[data-color^="dark-"] .logo .img-uchuva {
+    background-image: url("../img/logo/uchuva-light.svg") !important;
 }
 
 /*
  * Logo Lobby Uchuva
  */
-html[data-color^=light-] .logo-default.img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-lobby-light.svg') !important;
+html[data-color^="light-"] .logo-default.img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-lobby-light.svg") !important;
 }
-html[data-color^=dark-] .logo-default.img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-lobby-dark.svg') !important;
+html[data-color^="dark-"] .logo-default.img-uchuva {
+    background-image: url("../img/logo/logo-uchuva-lobby-dark.svg") !important;
 }
 html[data-color=] .logo-default.img-uchuva {
-    background-image: url('../img/logo/logo-uchuva-lobby-light.svg') !important;
+    background-image: url("../img/logo/logo-uchuva-lobby-light.svg") !important;
 }
 .logo-default.img-uchuva {
     width: 93px;
     min-height: 104px;
 }
 
-
 /*
  * Loading start
  */
- @keyframes rotate {
+@keyframes rotate {
     from {
         transform: rotate(0deg);
     }
@@ -58,8 +57,7 @@ html[data-color=] .logo-default.img-uchuva {
     }
 }
 
-
- @-webkit-keyframes rotate {
+@-webkit-keyframes rotate {
     from {
         -webkit-transform: rotate(0deg);
     }
@@ -69,12 +67,12 @@ html[data-color=] .logo-default.img-uchuva {
 }
 
 .load {
-	width: 36px;
-	height: 36px;
-	margin: 0 auto;
-	border:solid 4px rgba(0, 0, 0, .1);
-	border-radius: 50%;
-	border-left-color: var(--primary);
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    border: solid 4px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-left-color: var(--primary);
 
     animation: rotate 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
     -webkit-animation: rotate 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
@@ -82,7 +80,6 @@ html[data-color=] .logo-default.img-uchuva {
 /*
  * Loading End
  */
-
 
 /*
  * DataTables Start
@@ -98,12 +95,11 @@ input[type="file"] {
     display: none;
 }
 
-
 /*
  * New class
  */
 .no-padding {
-     padding: 0 !important;
+    padding: 0 !important;
 }
 .no-padding-right {
     padding-right: 0 !important;
@@ -115,7 +111,10 @@ input[type="file"] {
     line-height: 1.5rem;
     padding: 0 !important;
 }
-
 .table-order tr:not(:first-child) td {
     padding-top: 2rem !important;
+}
+.btn-close:after {
+    display: inline-block;
+    content: "";
 }

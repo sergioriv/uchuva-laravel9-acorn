@@ -12,28 +12,87 @@ $title = __('Create order');
 
 @section('js_page')
 <script>
-   jQuery('.add-table').click(function () {
-        jQuery('#table').val( $(this).data('id') );
+
+    var dishes_selected = [];
+
+    jQuery('.add-table').click(function () {
+        jQuery('#table').val( $(this).data('id') ).data('reference', $(this).data('reference'));
         $('.add-table .card').removeClass('border border-primary');
         $(this).children('.card').addClass('border border-primary');
     });
 
-    function note_dish(val, id)
-    {
-        val > 0 ? $( '#note-' + id ).removeClass('d-none')
-                : $( '#note-' + id ).addClass('d-none').children('textarea').val('');
-    }
-
     jQuery('.dish-quality').keyup(function () {
-        note_dish( $(this).val(), $(this).data('id') )
+
+        var id = $(this).data('id');
+
+        if($(this).val() > 0) {
+            $( '#note-' + id ).removeClass('d-none');
+
+            if (!dishes_selected.includes(id))
+                dishes_selected.push(id);
+
+        } else {
+            $( '#note-' + id ).addClass('d-none').children('textarea').val('');
+
+            dishes_selected.splice( $.inArray(id, dishes_selected), 1 );
+        }
     });
 
     jQuery('.btn-quality').click(function () {
-        var dishQuality = $( '#dish-quality-' + $(this).data('id') ).val();
+
+        var id = $(this).data('id');
+
+        var dishQuality = $( '#dish-quality-' + id ).val();
 
         dishQuality = $(this).data('spin') == 'up' ? dishQuality+= 1 : dishQuality-= 1;
 
-        note_dish( dishQuality, $(this).data('id') );
+        if(dishQuality > 0) {
+            $( '#note-' + id ).removeClass('d-none');
+
+            if (!dishes_selected.includes(id))
+                dishes_selected.push(id);
+
+        } else {
+            $( '#note-' + id ).addClass('d-none').children('textarea').val('');
+
+            dishes_selected.splice( $.inArray(id, dishes_selected), 1 );
+        }
+    });
+
+    jQuery('#order-confirm').click(function () {
+        var inner_dishes = '';
+
+        if ( !$('#table').val() ) {
+            $('#dish-confirm').html(`Debe seleccionar una mesa`);
+            return;
+        }
+
+        if ( dishes_selected.length == 0 ) {
+            $('#dish-confirm').html(`Debe seleccionar platos`);
+            return;
+        }
+
+        $('#footer-order-confirm').html(`<button type="submit" class="btn btn-primary">Crear</button>`);
+
+        inner_dishes += `<div class="text-center h4 mb-5">Mesa: ` + $('#table').data('reference') + `</div>`;
+        inner_dishes += `<div class="data-table-rows slim">`;
+        inner_dishes += `<table class="data-table nowrap w-100 dataTable no-footer text-center table-order">`;
+        inner_dishes += `<tbody>`;
+
+        dishes_selected.forEach(dish_id => {
+            inner_dishes += `<tr><td>`;
+            inner_dishes += `<text class="h4">` + $('#dish-name-' + dish_id).html() + `</text><br>`;
+            inner_dishes += `<text class="text-small">` + $('#dish-price-' + dish_id).html() +`</text><br>`;
+            inner_dishes += `<text class="h5">` + $('#dish-quality-' + dish_id).val() + `</text><br>`;
+            inner_dishes += `<text class="text-small">` + $('#dish-note-' + dish_id).val() + `</text><br>`;
+            inner_dishes += `</td></tr>`;
+        });
+
+        inner_dishes += `</tbody>`;
+        inner_dishes += `</table>`;
+        inner_dishes += `</div>`;
+
+        $('#dish-confirm').html(inner_dishes);
     });
 
 </script>
@@ -67,7 +126,7 @@ $title = __('Create order');
                   <h2 class="small-title">{{ __('Tables') }}</h2>
                   <div class="row g-2">
                      @foreach ($tables as $table)
-                     <div class="col-6 col-md-4 col-lg-2 add-table" data-id="{{ $table->id }}">
+                     <div class="col-6 col-md-4 col-lg-2 add-table" data-id="{{ $table->id }}" data-reference="{{ $table->reference }}">
                         <div class="card hover-scale-up cursor-pointer">
                            <div class="card-body d-flex flex-column align-items-center">
                               <div
@@ -107,9 +166,9 @@ $title = __('Create order');
                                           <td>
                                              <text class="h6">{{ $dish->quality }}</text>
                                              <br>
-                                             <text class="h4">{{ $dish->name }}</text>
+                                             <text class="h4" id="dish-name-{{ $dish->id }}">{{ $dish->name }}</text>
                                              <br>
-                                             <text class="text-small">@money($dish->price)</text>
+                                             <text class="text-small" id="dish-price-{{ $dish->id }}">@money($dish->price)</text>
                                              <br>
                                              <div class="input-group spinner" data-trigger="spinner">
                                                 <div class="input-group-text">
@@ -117,7 +176,7 @@ $title = __('Create order');
                                                       data-spin="down">-</button>
                                                 </div>
                                                 <x-input type="text" name="dish-quality-{{ $dish->id }}" id="dish-quality-{{ $dish->id }}" data-id="{{ $dish->id }}" class="text-center dish-quality"
-                                                   value="{{ old('dish-'.$dish->id) }}" data-min="0"
+                                                   value="{{ old('dish-'.$dish->id) }}" data-min="0" data-max="{{ $dish->quality }}"
                                                    data-rule="quantity" />
                                                 <div class="input-group-text">
                                                    <button type="button" class="spin-up single btn-quality" data-id="{{ $dish->id }}"
@@ -125,7 +184,7 @@ $title = __('Create order');
                                                 </div>
                                              </div>
                                              <div id="note-{{ $dish->id }}" class="mt-2 d-none">
-                                                <textarea name="dish-note-{{ $dish->id }}" class="form-control" rows="2" placeholder="{{ __('add note') }}"></textarea>
+                                                <textarea name="dish-note-{{ $dish->id }}" id="dish-note-{{ $dish->id }}" class="form-control" rows="2" placeholder="{{ __('add note') }}"></textarea>
                                              </div>
                                              <input type="hidden" name="dish-price-{{ $dish->id }}"
                                                 value="{{ $dish->price }}">
@@ -143,13 +202,21 @@ $title = __('Create order');
                   </div>
                </section>
 
-               <x-button type="submit" class="btn-primary">{{ __('Create') }}</x-button>
+               {{-- <x-button type="submit" class="btn-primary">{{ __('Continue') }}</x-button> --}}
+               <button type="button" id="order-confirm" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#openModal">{{ __('Continue') }}</button>
 
+               <x-modal id="openModal">
+                <section id="dish-confirm">
 
+                </section>
+               </x-modal>
             </form>
          </section>
 
       </div>
    </div>
+
+   <!-- Modal -->
+
 </div>
 @endsection
