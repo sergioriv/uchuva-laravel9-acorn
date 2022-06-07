@@ -69,7 +69,7 @@ jQuery("#order-confirm").click(function () {
         $("#table").data("reference") +
         `</div>`;
     inner_dishes += `<div class="data-table-rows slim">`;
-    inner_dishes += `<table class="data-table nowrap w-100 dataTable no-footer text-center">`;
+    inner_dishes += `<table class="data-table nowrap w-100 dataTable no-footer text-center table-order">`;
     inner_dishes += `<tbody>`;
 
     dishes_selected.forEach((dish_id) => {
