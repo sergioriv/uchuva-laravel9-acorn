@@ -42,7 +42,7 @@ $title = $order->code;
                         @method('PUT')
 
                         <!-- Table -->
-                        <input type="hidden" name="table" id="table" value="{{ $order->table_id }}" />
+                        <input type="hidden" name="table" id="table" value="{{ $order->table->id }}" data-reference="{{ $order->table->reference }}" />
 
                         <!-- Menu -->
                         <section class="mb-5">

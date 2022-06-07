@@ -60,9 +60,15 @@ jQuery("#order-confirm").click(function () {
         return;
     }
 
-    $("#footer-confirm").html(
-        `<button type="submit" class="btn btn-primary">Crear</button>`
-    );
+    if ( $("input[name='_method']").val() === 'PUT' ) {
+        $("#footer-confirm").html(
+            `<button type="submit" class="btn btn-primary">Actualizar</button>`
+        );
+    } else {
+        $("#footer-confirm").html(
+            `<button type="submit" class="btn btn-primary">Crear</button>`
+        );
+    }
 
     inner_dishes +=
         `<div class="text-center h4 mb-5">Mesa: ` +
