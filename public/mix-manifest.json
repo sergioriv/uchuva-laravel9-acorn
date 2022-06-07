@@ -102,6 +102,7 @@
     "/js/pages/auth.login.js": "/js/pages/auth.login.js",
     "/js/pages/auth.register.js": "/js/pages/auth.register.js",
     "/js/pages/auth.resetpassword.js": "/js/pages/auth.resetpassword.js",
+    "/js/pages/confirm_order.js": "/js/pages/confirm_order.js",
     "/js/plugins/datatable/branches_datatable.ajax.js": "/js/plugins/datatable/branches_datatable.ajax.js",
     "/js/plugins/datatable/categories_datatable.ajax.js": "/js/plugins/datatable/categories_datatable.ajax.js",
     "/js/plugins/datatable/dishes_datatable.ajax.js": "/js/plugins/datatable/dishes_datatable.ajax.js",

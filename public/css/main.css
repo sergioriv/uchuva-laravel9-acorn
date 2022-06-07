@@ -118,3 +118,27 @@ input[type="file"] {
     display: inline-block;
     content: "";
 }
+div[data-notify="container"] .btn-close {
+    top: 10px !important;
+}
+
+/*
+ * Badge check
+ */
+.card-badge:after {
+    font-family: "CS-Interface" !important;
+    content: "\e913";
+    position: absolute !important;
+    z-index: 1;
+    top: 0.5rem !important;
+    left: 0.5rem !important;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.7em;
+    font-weight: 400;
+    border-radius: var(--border-radius-md);
+    background: var(--primary);
+    color: var(--light-text);
+    text-align: center;
+    line-height: 1.6;
+}

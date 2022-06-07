@@ -12,7 +12,7 @@ $title = __('Orders list');
 <script src="/js/vendor/datatables.min.js"></script>
 <script src="/js/vendor/mousetrap.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.min.js"></script>
-<script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+{{-- <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script> --}}
 @endsection
 
 @section('js_page')

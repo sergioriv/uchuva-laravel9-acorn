@@ -59,7 +59,7 @@ class RowsAjaxOrders {
                     targets: 0,
                     render: function (data, type, row, meta) {
                         return (
-                            '<a class="list-item-heading body font-weight-bold" href="/orders/' + row.id +'">' + data + "</a>"
+                            '<a class="list-item-heading body font-weight-bold" href="/orders/' + row.id +'/edit">' + data + "</a>"
                         );
                     },
                 },
@@ -68,7 +68,7 @@ class RowsAjaxOrders {
                     render: function(data) {
                         return (
                             /* A function that returns the time from now. */
-                            '<h4 class="text-small">' + moment(data).locale('es').startOf('minute').fromNow() + '</h4>'
+                            '<h4 class="text-small">' + moment(data).startOf('minute').fromNow() + '</h4>'
                         )
                     }
                 }

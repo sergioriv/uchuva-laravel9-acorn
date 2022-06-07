@@ -141,7 +141,12 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $order->table;
+        $order->dishes;
+
+        $categories = $this->dishes_categories();
+
+        return view('waiter.orders.edit')->with(['order' => $order, 'categories' => $categories]);
     }
 
     /**
@@ -153,7 +158,55 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+
+        $totalOrden = 0;
+
+        $categories = $this->dishes_categories();
+        foreach ($categories as $category) :
+            foreach ($category->dishes as $dish) :
+                // if ($dish->available != NULL)
+                // {
+                    $dish_quality = 'dish-quality-' . $dish->id;
+
+                    if ( $request->$dish_quality > 0 )
+                    {
+
+                        $dish_price = 'dish-price-' . $dish->id;
+                        $dish_note = 'dish-note-' . $dish->id;
+
+                        $dishOrder = OrderDish::where('order_id', $order->id)->where('dish_id', $dish->id)->first();
+
+                        if ($dishOrder)
+                        {
+                            $dishOrder->update([
+                                'quality' => $request->$dish_quality,
+                                'note' => $request->$dish_note
+                            ]);
+                        } else
+                        {
+                            OrderDish::create([
+                                'order_id' => $order->id,
+                                'dish_id' => $dish->id,
+                                'price' => $request->$dish_price,
+                                'quality' => $request->$dish_quality,
+                                'note' => $request->$dish_note
+                            ]);
+                        }
+
+                        $totalOrden += ($request->$dish_quality * $request->$dish_price);
+
+                    }
+                // }
+            endforeach;
+        endforeach;
+
+        $order->update([
+            'total' => $totalOrden
+        ]);
+
+        return redirect()->route('waiter.orders.index')->with(
+            ['notify' => 'success', 'title' => __('Order Updated!')],
+        );
     }
 
     /**

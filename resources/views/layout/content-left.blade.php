@@ -1,5 +1,5 @@
-<div class="min-h-100 d-flex align-items-center">
-    <div class="w-100 w-lg-75 w-xxl-50">
+<div class="min-h-100 d-flex align-items-start justify-content-center">
+    <div class="w-100 w-lg-75 w-xxl-75 pt-7 text-end">
         <div>
             <div class="mb-5">
                 <h1 class="display-3 text-white">Multiple Concepts</h1>
