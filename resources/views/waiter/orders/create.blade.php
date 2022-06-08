@@ -72,7 +72,7 @@ $title = __('Create order');
                                             $category->name }}</div>
                                     </div>
                                 </div>
-                                <div id="collapse{{ $category->id }}" class="collapse show"
+                                <div id="collapse{{ $category->id }}" class="collapse"
                                     data-bs-parent="#accordionCardsCategories">
                                     <div class="card-body accordion-content pt-0">
                                         <div class="data-table-rows slim">
@@ -139,6 +139,7 @@ $title = __('Create order');
 
                     <!-- Modal -->
                     <x-modal id="openModal">
+                        @section('title', __('Confirm Order'))
                         <section id="dish-confirm">
                         </section>
                     </x-modal>

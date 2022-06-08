@@ -159,53 +159,65 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
 
-        $totalOrden = 0;
+        if ($request->finished)
+        {
+            $order->update([
+                'finished' => TRUE
+            ]);
+            $titleNotify = __('Order delivered') .'!';
+        } else {
 
-        $categories = $this->dishes_categories();
-        foreach ($categories as $category) :
-            foreach ($category->dishes as $dish) :
-                // if ($dish->available != NULL)
-                // {
-                    $dish_quality = 'dish-quality-' . $dish->id;
+            $totalOrden = 0;
 
-                    if ( $request->$dish_quality > 0 )
-                    {
+            $categories = $this->dishes_categories();
+            foreach ($categories as $category) :
+                foreach ($category->dishes as $dish) :
+                    // if ($dish->available != NULL)
+                    // {
+                        $dish_quality = 'dish-quality-' . $dish->id;
 
-                        $dish_price = 'dish-price-' . $dish->id;
-                        $dish_note = 'dish-note-' . $dish->id;
-
-                        $dishOrder = OrderDish::where('order_id', $order->id)->where('dish_id', $dish->id)->first();
-
-                        if ($dishOrder)
+                        if ( $request->$dish_quality > 0 )
                         {
-                            $dishOrder->update([
-                                'quality' => $request->$dish_quality,
-                                'note' => $request->$dish_note
-                            ]);
-                        } else
-                        {
-                            OrderDish::create([
-                                'order_id' => $order->id,
-                                'dish_id' => $dish->id,
-                                'price' => $request->$dish_price,
-                                'quality' => $request->$dish_quality,
-                                'note' => $request->$dish_note
-                            ]);
+
+                            $dish_price = 'dish-price-' . $dish->id;
+                            $dish_note = 'dish-note-' . $dish->id;
+
+                            $dishOrder = OrderDish::where('order_id', $order->id)->where('dish_id', $dish->id)->first();
+
+                            if ($dishOrder)
+                            {
+                                $dishOrder->update([
+                                    'quality' => $request->$dish_quality,
+                                    'note' => $request->$dish_note
+                                ]);
+                            } else
+                            {
+                                OrderDish::create([
+                                    'order_id' => $order->id,
+                                    'dish_id' => $dish->id,
+                                    'price' => $request->$dish_price,
+                                    'quality' => $request->$dish_quality,
+                                    'note' => $request->$dish_note
+                                ]);
+                            }
+
+                            $totalOrden += ($request->$dish_quality * $request->$dish_price);
+
                         }
-
-                        $totalOrden += ($request->$dish_quality * $request->$dish_price);
-
-                    }
-                // }
+                    // }
+                endforeach;
             endforeach;
-        endforeach;
 
-        $order->update([
-            'total' => $totalOrden
-        ]);
+            $order->update([
+                'total' => $totalOrden
+            ]);
+
+            $titleNotify = __('Order Updated!');
+        }
+
 
         return redirect()->route('waiter.orders.index')->with(
-            ['notify' => 'success', 'title' => __('Order Updated!')],
+            ['notify' => 'success', 'title' => $titleNotify],
         );
     }
 

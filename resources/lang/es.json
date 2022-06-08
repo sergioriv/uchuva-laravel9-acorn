@@ -56,6 +56,9 @@
     "Create order": "Crear pedido",
     "Order created!": "Pedido creado!",
     "Order updated!": "Pedido actualizado!",
+    "Confirm Order": "Confirmar pedido",
+    "Order delivered": "Pedido entregado",
+    "Confirm order delivered": "Confirmar pedido entregado",
 
     "contact": "Contacto",
     "Quantity": "Cantidad",
@@ -68,6 +71,7 @@
     "Reference": "Referencia",
     "The reference must be 3 characters max, contain letters and numbers.": "La referencia debe tener un máximo de 3 caracteres, contener letras y números.",
     "add note": "agregar nota",
+    "Continue": "Continuar",
 
     "The table was not found.": "La mesa no fue encontrada.",
 
