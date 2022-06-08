@@ -83,13 +83,17 @@ $title = __('Create order');
                                                     @if ($dish->available != NULL)
                                                     <tr>
                                                         <td>
-                                                            <text class="h6">{{ $dish->quality }}</text>
-                                                            <br>
                                                             <text class="h4" id="dish-name-{{ $dish->id }}">{{
                                                                 $dish->name }}</text>
                                                             <br>
-                                                            <text class="text-small"
-                                                                id="dish-price-{{ $dish->id }}">@money($dish->price)</text>
+                                                            <text class="text-small" id="dish-price-{{ $dish->id }}">
+                                                                @money($dish->price)
+                                                            </text>
+                                                                <br>
+                                                            <text class="text-small">{{ __('Available') }}: </text>
+                                                            <text class="font-weight-bold text-primary">
+                                                                {{ $dish->quality }}
+                                                            </text>
                                                             <br>
                                                             <div class="input-group spinner" data-trigger="spinner">
                                                                 <div class="input-group-text">
@@ -135,14 +139,14 @@ $title = __('Create order');
                     </section>
 
                     <button type="button" id="order-confirm" class="btn btn-primary mb-1" data-bs-toggle="modal"
-                        data-bs-target="#openModal">{{ __('Continue') }}</button>
+                        data-bs-target="#modalConfirmOrder">{{ __('Continue') }}</button>
 
-                    <!-- Modal -->
-                    <x-modal id="openModal">
-                        @section('title', __('Confirm Order'))
+                    <!-- Modal Confirm Start -->
+                    <x-modal-confirm-order>
                         <section id="dish-confirm">
                         </section>
-                    </x-modal>
+                    </x-modal-confirm-order>
+                    <!-- Modal Confirm End -->
 
                 </form>
             </section>

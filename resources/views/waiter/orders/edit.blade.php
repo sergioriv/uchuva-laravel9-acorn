@@ -40,22 +40,14 @@ $title = $order->code;
                             @csrf
                             @method('PUT')
 
-                            <x-button type="button" name="finished" value="1" class="btn-outline-info w-100 w-md-auto"
+                            <x-button type="button" class="btn-outline-info w-100 w-md-auto"
                                 data-bs-toggle="modal" data-bs-target="#modalConfirmDelivered">
                                 {{ '¿'. __('Order delivered') .'?'}}
                             </x-button>
                             <!-- Order delivered Button End -->
 
                             <!-- Modal Delivered Start -->
-                            <x-modal id="modalConfirmDelivered">
-                                @section('title', '¿'. __('Order delivered') .'?')
-                                <p>
-                                    {{ __('Confirm order delivered') }}
-                                </p>
-                                @section('button-confirm')
-                                    <button type="submit" class="btn btn-primary">{{ __('Confirm') }}</button>
-                                @endsection
-                            </x-modal>
+                            <x-modal-delivered-order />
                             <!-- Modal Delivered End -->
                         </form>
                         <!-- Top Buttons End -->
@@ -118,13 +110,16 @@ $title = $order->code;
                                                     @if ($dish->available != null || $dish_quality > 0)
                                                     <tr>
                                                         <td>
-                                                            <text class="h6">{{ $dish->quality }}</text>
-                                                            <br>
                                                             <text class="h4" id="dish-name-{{ $dish->id }}">{{
                                                                 $dish->name }}</text>
                                                             <br>
                                                             <text class="text-small"
-                                                                id="dish-price-{{ $dish->id }}">@money($dish->price)</text>
+                                                            id="dish-price-{{ $dish->id }}">@money($dish->price)</text>
+                                                            <br>
+                                                            <text class="text-small">{{ __('Available') }}: </text>
+                                                            <text class="font-weight-bold text-primary">
+                                                                {{ $dish_quality > $dish->quality ? $dish_quality : $dish->quality }}
+                                                            </text>
                                                             <br>
                                                             <div class="input-group spinner" data-trigger="spinner">
                                                                 <div class="input-group-text">
@@ -138,7 +133,7 @@ $title = $order->code;
                                                                     data-id="{{ $dish->id }}"
                                                                     class="text-center dish-quality"
                                                                     value="{{ $dish_quality }}" data-min="0"
-                                                                    data-max="{{ $dish->quality }}"
+                                                                    data-max="{{ $dish_quality > $dish->quality ? $dish_quality : $dish->quality }}"
                                                                     data-rule="quantity" />
                                                                 <div class="input-group-text">
                                                                     <button type="button"
@@ -174,11 +169,10 @@ $title = $order->code;
                         data-bs-target="#modalConfirmOrder">{{ __('Continue') }}</button>
 
                     <!-- Modal Confirm Start -->
-                    <x-modal id="modalConfirmOrder">
-                        @section('title', __('Confirm Order'))
+                    <x-modal-confirm-order>
                         <section id="dish-confirm">
                         </section>
-                    </x-modal>
+                    </x-modal-confirm-order>
                     <!-- Modal Confirm End -->
 
                 </form>

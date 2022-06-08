@@ -39,8 +39,9 @@ class OrderController extends Controller
 
     public function data()
     {
-        return ['data' => Order::with('table')
-                ->select('id','table_id','code','total','created_at')
+        return [
+            'data' => Order::with('table')
+                ->select('id', 'table_id', 'code', 'total', 'created_at')
                 ->where('waiter_id', '=', $this->parents()[0]->id)
                 ->whereNull('finished')
                 ->orderBy('id', 'DESC')
@@ -89,12 +90,10 @@ class OrderController extends Controller
         $categories = $this->dishes_categories();
         foreach ($categories as $category) {
             foreach ($category->dishes as $dish) {
-                if ($dish->available != NULL)
-                {
+                if ($dish->available != NULL) {
                     $dish_quality = 'dish-quality-' . $dish->id;
 
-                    if ( $request->$dish_quality > 0 )
-                    {
+                    if ($request->$dish_quality > 0) {
                         $dish_price = 'dish-price-' . $dish->id;
                         $dish_note = 'dish-note-' . $dish->id;
 
@@ -108,6 +107,20 @@ class OrderController extends Controller
                             'note' => $request->$dish_note
                         ]);
 
+
+                        /* Updating the quality and available of the dish. */
+                        $new_quality_dish = ($dish->quality - $request->$dish_quality);
+
+                        if ($new_quality_dish > 0) :
+                            $dish->update([
+                                'quality' => $new_quality_dish
+                            ]);
+                        else :
+                            $dish->update([
+                                'quality' => $new_quality_dish,
+                                'available' => NULL
+                            ]);
+                        endif;
                     }
                 }
             }
@@ -159,12 +172,11 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
 
-        if ($request->finished)
-        {
+        if ($request->finished) {
             $order->update([
                 'finished' => TRUE
             ]);
-            $titleNotify = __('Order delivered') .'!';
+            $titleNotify = __('Order delivered') . '!';
         } else {
 
             $totalOrden = 0;
@@ -172,39 +184,58 @@ class OrderController extends Controller
             $categories = $this->dishes_categories();
             foreach ($categories as $category) :
                 foreach ($category->dishes as $dish) :
-                    // if ($dish->available != NULL)
-                    // {
-                        $dish_quality = 'dish-quality-' . $dish->id;
 
-                        if ( $request->$dish_quality > 0 )
-                        {
+                    $dish_quality = 'dish-quality-' . $dish->id;
 
-                            $dish_price = 'dish-price-' . $dish->id;
-                            $dish_note = 'dish-note-' . $dish->id;
+                    if ($request->$dish_quality > 0) {
 
-                            $dishOrder = OrderDish::where('order_id', $order->id)->where('dish_id', $dish->id)->first();
+                        $dish_price = 'dish-price-' . $dish->id;
+                        $dish_note = 'dish-note-' . $dish->id;
 
-                            if ($dishOrder)
-                            {
-                                $dishOrder->update([
-                                    'quality' => $request->$dish_quality,
-                                    'note' => $request->$dish_note
-                                ]);
-                            } else
-                            {
-                                OrderDish::create([
-                                    'order_id' => $order->id,
-                                    'dish_id' => $dish->id,
-                                    'price' => $request->$dish_price,
-                                    'quality' => $request->$dish_quality,
-                                    'note' => $request->$dish_note
-                                ]);
-                            }
+                        $dishOrder = OrderDish::where('order_id', $order->id)->where('dish_id', $dish->id)->first();
 
-                            $totalOrden += ($request->$dish_quality * $request->$dish_price);
+                        if ($dishOrder) {
 
+                            /* Updating the quality of the dish. */
+                            $new_quality_dish = ($dish->quality - ($request->$dish_quality - $dishOrder->quality));
+
+
+                            /* Updating the quality and note of the dish order. */
+                            $dishOrder->update([
+                                'quality' => $request->$dish_quality,
+                                'note' => $request->$dish_note
+                            ]);
+                        } else {
+                            OrderDish::create([
+                                'order_id' => $order->id,
+                                'dish_id' => $dish->id,
+                                'price' => $request->$dish_price,
+                                'quality' => $request->$dish_quality,
+                                'note' => $request->$dish_note
+                            ]);
+
+
+                            /* Updating the quality of the dish. */
+                            $new_quality_dish = ($dish->quality - $request->$dish_quality);
                         }
-                    // }
+
+                        /* Updating the quality and available of the dish. */
+                        if ($new_quality_dish > 0) :
+                            $dish->update([
+                                'quality' => $new_quality_dish,
+                                'available' => TRUE
+                            ]);
+                        else :
+                            $dish->update([
+                                'quality' => $new_quality_dish,
+                                'available' => NULL
+                            ]);
+                        endif;
+
+
+                        $totalOrden += ($request->$dish_quality * $request->$dish_price);
+                    }
+
                 endforeach;
             endforeach;
 
