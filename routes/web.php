@@ -60,6 +60,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('branches', BranchController::class)->names('restaurant.branches');
     Route::get('branches.json', [BranchController::class, 'data']);
 
+        /* Route Branch Waiters and Tables */
+        Route::get('branches/{branch}/waiters.json', [BranchController::class, 'waiters_data']);
+        Route::get('branches/{branch}/tables.json', [BranchController::class, 'tables_data']);
+
     /* Route Waiters */
     Route::resource('waiters', WaiterController::class)->names('branch.waiters');
     Route::get('waiters.json', [WaiterController::class, 'data']);
@@ -78,8 +82,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /* Route Orders */
     Route::resource('orders', OrderController::class)->except('delete')->names('waiter.orders');
-    // Route::get('orders/{order}/finished', [OrderController::class, 'data']);
     Route::get('orders.json', [OrderController::class, 'data']);
+
 });
 
 

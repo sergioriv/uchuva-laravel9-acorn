@@ -95,6 +95,18 @@ class Scripts {
         if (typeof RowsAjaxOrders !== "undefined") {
             const rowsAjaxOrders = new RowsAjaxOrders();
         }
+        if (typeof RowsAjaxOrdersBranch !== "undefined") {
+            const rowsAjaxOrdersBranch = new RowsAjaxOrdersBranch();
+        }
+        if (typeof RowsAjaxBranchWaiters !== "undefined") {
+            const rowsAjaxBranchWaiters = new RowsAjaxBranchWaiters();
+        }
+        if (typeof RowsAjaxBranchTables !== "undefined") {
+            const rowsAjaxBranchTables = new RowsAjaxBranchTables();
+        }
+        if (typeof RowsAjaxBranchMenu !== "undefined") {
+            const rowsAjaxBranchMenu = new RowsAjaxBranchMenu();
+        }
     }
 
     // Settings initialization

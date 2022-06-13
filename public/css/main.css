@@ -87,6 +87,12 @@ html[data-color=] .logo-default.img-uchuva {
 .dataTables_scrollBody {
     height: fit-content !important;
 }
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+.table>:not(caption)>*>* {
+    padding: .5rem .5rem !important;
+}
 /*
  * DataTables End
  */
@@ -114,10 +120,10 @@ input[type="file"] {
 .table-order tr:not(:first-child) td {
     padding-top: 2rem !important;
 }
-.btn-close:after {
+/* .btn-close:after {
     display: inline-block;
     content: "";
-}
+} */
 div[data-notify="container"] .btn-close {
     top: 10px !important;
 }

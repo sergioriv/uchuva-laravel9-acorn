@@ -30,6 +30,11 @@ class Branch extends CastCreateModel
 
     public function waiters()
     {
-        return $this->hasMany(Waiter::class);
+        return $this->hasMany(Waiter::class)->with('user');
+    }
+
+    public function tables()
+    {
+        return $this->hasMany(Table::class);
     }
 }

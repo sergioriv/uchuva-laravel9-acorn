@@ -5,7 +5,9 @@ namespace App\Http\Controllers\restaurant;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\support\UserController;
 use App\Models\Branch;
+use App\Models\Category;
 use App\Models\User;
+use App\Models\Waiter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +94,9 @@ class BranchController extends Controller
     public function show(Branch $branch)
     {
         $branch->user;
-        return view('restaurant.branches.show')->with('branch', $branch);
+        $branch->tables;
+        $branch->waiters;
+        return view('restaurant.branches.show')->with(['branch' => $branch, 'categories' => $this->menu()]);
     }
 
     /**
@@ -183,5 +187,24 @@ class BranchController extends Controller
             'address' => $request->address,
             'telephone' => $request->telephone
         ]);
+    }
+
+    public function waiters_data(Branch $branch)
+    {
+        return ['data' => $branch->waiters];
+    }
+
+    public function tables_data(Branch $branch)
+    {
+        return ['data' => $branch->tables];
+    }
+
+    public function menu()
+    {
+        return Category::with('dishes')
+            ->whereHas('dishes', function ($dish) {
+                $dish->whereNotNull('available');
+            })
+            ->where('restaurant_id', '=', $this->restaurant())->get();
     }
 }

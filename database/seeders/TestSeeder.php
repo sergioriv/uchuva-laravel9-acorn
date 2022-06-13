@@ -21,7 +21,7 @@ class TestSeeder extends Seeder
     public function run()
     {
 
-        // Permission::create([ 'name' => 'categories' ]);
+        Permission::create([ 'name' => 'branch.waiters' ]);
 
     }
 }

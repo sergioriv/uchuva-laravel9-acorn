@@ -11,8 +11,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
-                <div id="footer-confirm">
-                </div>
+                <div id="footer-confirm"></div>
             </div>
         </div>
     </div>

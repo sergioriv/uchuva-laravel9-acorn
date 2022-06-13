@@ -31,7 +31,7 @@ class Order extends CastCreateModel
 
     public function waiter()
     {
-        return $this->belongsTo(Waiter::class);
+        return $this->belongsTo(Waiter::class)->with('user');
     }
 
     public function dishes()

@@ -105,6 +105,7 @@ $title = $restaurant->user->name;
                         <div class="tab-content">
                             <!-- Payments Tab Start -->
                             <div class="tab-pane fade active show" id="paymentsTab" role="tabpanel">
+
                                 <!-- Payments Buttons Start -->
                                 <div class="mb-2 d-flex align-items-start justify-content-end">
                                     <!-- Create Payment Button Start -->
@@ -116,6 +117,7 @@ $title = $restaurant->user->name;
                                     <!-- Create Payment Button End -->
                                 </div>
                                 <!-- Payments Buttons End -->
+
                                 <div class="data-table-rows slim">
                                     <!-- Table Start -->
                                     <div class="data-table-responsive-wrapper">
