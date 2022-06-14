@@ -22,8 +22,8 @@ $description = '';
                 <div class="logo-default img-uchuva"></div>
             </a>
         </div>
-        <div class="mb-5">
-            <h2 class="cta-1 text-primary">{{ __('Welcome') }}</h2>
+        <div class="mb-5 text-center">
+            <h2 class="cta-1 text-primary">Software para el control de restaurantes.</h2>
         </div>
         <div class="mb-5">
             <p class="h6">

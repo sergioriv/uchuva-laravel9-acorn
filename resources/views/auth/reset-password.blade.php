@@ -32,7 +32,7 @@ $description = 'Reset Password Page'
             <p class="h6">Please use below form to reset your password.</p>
             <p class="h6">
                 If you are a member, please
-                <a href="/Pages/Authentication/Login">login</a>
+                <a href="/">login</a>
                 .
             </p>
         </div>

@@ -20,7 +20,7 @@
                 y muchas más funciones…
             </p>
             <div class="mb-5">
-                <a class="btn btn-lg btn-outline-white" href="https://uchuva.app">Learn More</a>
+                <a class="btn btn-lg btn-outline-white" href="https://uchuva.app">Conozca más...</a>
             </div>
         </div>
     </div>
