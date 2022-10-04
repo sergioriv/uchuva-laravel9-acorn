@@ -31,18 +31,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard'); })->name('dashboard');
 
-    Route::get('insert_roles', [UserController::class, 'insert_roles']);
-    Route::get('destroy_users', [UserController::class, 'destroy_users']);
 
+
+    /* ACCESS SUPPORT */
+    Route::middleware('can:support.access')->group(function () {
+
+        /* RESET PERMISSIONS */
+        Route::get('permissions-reset', function() {
+            app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+            return redirect()->back();
+        });
+
+        Route::resource('users', UserController::class)->except('destroy','create','store')->names('support.users');
+        Route::get('users.json', [UserController::class, 'data']);
+
+        /* Route Roles */
+        Route::resource('roles', RoleController::class)->except('destroy','show')->names('support.roles');
+        Route::get('roles.json', [RoleController::class, 'data']);
+    });
 
     /* Route Users */
     Route::put('change-password', [ConfirmEmailController::class, 'change_password'])->name('support.users.password');
-    Route::resource('users', UserController::class)->except('destroy','create','store')->names('support.users');
-    Route::get('users.json', [UserController::class, 'data']);
 
-    /* Route Roles */
-    Route::resource('roles', RoleController::class)->except('destroy','show')->names('support.roles');
-    Route::get('roles.json', [RoleController::class, 'data']);
 
     /* Route Profile */
     Route::get('profile', [ProfileController::class, 'show'])->name('user.profile');
