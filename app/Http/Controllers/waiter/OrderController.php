@@ -308,7 +308,7 @@ class OrderController extends Controller
     {
         switch (UserController::role_auth()) {
             case 'WAITER':
-                return Waiter::where('user_id', Auth::user()->id)->first()->id;
+                return Waiter::where('user_id', Auth::user()->id)->first()->restaurant_id;
 
             case 'RESTAURANT':
                 return Restaurant::where('user_id', Auth::user()->id)->first()->id;
