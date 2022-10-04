@@ -13,7 +13,7 @@ $title = __('Categories list');
 
 @section('js_page')
 <script src="/js/cs/datatable.extend.js"></script>
-<script src="/js/plugins/datatable/datatable_standard.js"></script>
+<script src="/js/plugins/datatable/datatable_standard.js?r=1664915426"></script>
 @endsection
 
 @section('content')

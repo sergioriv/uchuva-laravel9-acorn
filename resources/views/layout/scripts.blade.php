@@ -10,19 +10,19 @@
 @yield('js_vendor')
 <!-- Vendor Scripts End -->
 <!-- Template Base Scripts Start -->
-<script src="/js/base/helpers.js"></script>
-<script src="/js/base/globals.js"></script>
-<script src="/js/base/nav.js"></script>
-<script src="/js/base/settings.js"></script>
+<script src="/js/base/helpers.js?r=1664915426"></script>
+<script src="/js/base/globals.js?r=1664915426"></script>
+<script src="/js/base/nav.js?r=1664915426"></script>
+<script src="/js/base/settings.js?r=1664915426"></script>
 <!-- Template Base Scripts End -->
 <!-- Page Specific Scripts Start -->
-<script src="/js/app.js"></script>
+<script src="/js/app.js?r=1664915426"></script>
 @if (Session::has('notify'))
 <script>
     callNotify( "{{ Session::get('notify') }}", "{{ Session::get('title') }}")
 </script>
 @endif
 @yield('js_page')
-<script src="/js/common.js"></script>
-<script src="/js/scripts.js"></script>
+<script src="/js/common.js?r=1664915426"></script>
+<script src="/js/scripts.js?r=1664915426"></script>
 <!-- Page Specific Scripts End -->
