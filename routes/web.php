@@ -34,13 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     /* ACCESS SUPPORT */
-    // Route::middleware('can:support.access')->group(function () {
-
-        /* RESET PERMISSIONS */
-        Route::get('permissions-reset', function() {
-            app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-            return redirect()->back();
-        });
+    Route::middleware('can:support.access')->group(function () {
 
         Route::resource('users', UserController::class)->except('destroy','create','store')->names('support.users');
         Route::get('users.json', [UserController::class, 'data']);
@@ -48,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         /* Route Roles */
         Route::resource('roles', RoleController::class)->except('destroy','show')->names('support.roles');
         Route::get('roles.json', [RoleController::class, 'data']);
-    // });
+    });
 
     /* Route Users */
     Route::put('change-password', [ConfirmEmailController::class, 'change_password'])->name('support.users.password');
