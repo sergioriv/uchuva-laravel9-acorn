@@ -21,7 +21,7 @@ class MailMessageComponent extends Component
         if ($headerRestaurant === TRUE)
             $this->headerRestaurant = config('app.url') .'/'. MyRestaurant::avatar();
         else
-            $this->headerRestaurant = config('app.url') .'/img/logo/logo-uchuva-lobby-light.svg';
+            $this->headerRestaurant = config('app.url') .'/img/logo/uchuva.png';
     }
 
     /**

@@ -27,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('mail', function () {
+    return (new ContentMail)
+    ->title('algo')
+    ->line('texto')
+    ->toContent();
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard'); })->name('dashboard');
