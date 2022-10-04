@@ -1,5 +1,5 @@
 @php
-$title = 'Restaurant list';
+$title = 'Restaurants';
 @endphp
 @extends('layout',['title'=>$title])
 
@@ -8,14 +8,12 @@ $title = 'Restaurant list';
 @endsection
 
 @section('js_vendor')
-<script src="/js/vendor/bootstrap-submenu.js"></script>
 <script src="/js/vendor/datatables.min.js"></script>
-<script src="/js/vendor/mousetrap.min.js"></script>
 @endsection
 
 @section('js_page')
 <script src="/js/cs/datatable.extend.js"></script>
-<script src="/js/plugins/datatable/restaurants_datatable.ajax.js"></script>
+<script src="/js/plugins/datatable/datatable_standard.js"></script>
 @endsection
 
 @section('content')
@@ -65,43 +63,49 @@ $title = 'Restaurant list';
                         </div>
                     </div>
                     <!-- Search End -->
-
-                    <div class="col-sm-12 col-md-7 col-lg-9 col-xxl-10 text-end mb-1">
-                        <div class="d-inline-block">
-                            <!-- Options Start -->
-                            {{-- <div class="dropdown-as-select d-inline-block datatable-length"
-                                data-datatable="#datatable_restaurants" data-childSelector="span">
-                                <button class="btn p-0 shadow" type="button" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false" data-bs-offset="0,3">
-                                    <span class="btn btn-foreground-alternate dropdown-toggle" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" data-bs-delay="0" title="Item Count">
-                                        10 Items
-                                    </span>
-                                </button>
-                                <div class="dropdown-menu shadow dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">5 Items</a>
-                                    <a class="dropdown-item active" href="#">10 Items</a>
-                                    <a class="dropdown-item" href="#">20 Items</a>
-                                </div>
-                            </div> --}}
-                            <!-- Options End -->
-                        </div>
-                    </div>
                 </div>
                 <!-- Controls End -->
 
                 <!-- Table Start -->
                 <div class="data-table-responsive-wrapper">
-                    <table id="datatable_restaurants" class="data-table nowrap w-100">
+                    <table DataTable='true' class="data-table nowrap w-100">
                         <thead>
                             <tr>
-                                <th class="text-muted text-small text-uppercase">&nbsp;</th>
+                                <th class="empty">&nbsp;</th>
                                 <th class="text-muted text-small text-uppercase">{{ __('Name') }}</th>
+                                <th class="text-muted text-small text-uppercase">{{ __('Slug') }}</th>
                                 <th class="text-muted text-small text-uppercase">{{ __('Email') }}</th>
                                 <th class="text-muted text-small text-uppercase">{{ __('Telephone') }}</th>
                                 <th class="text-muted text-small text-uppercase">{{ __('Unsubscribe') }}</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($restaurants as $restaurant)
+
+                            <tr>
+                                <td>
+                                    @if (NULL !== $restaurant->user->avatar)
+                                    <div class="sw-6 mb-1 d-inline-block">
+                                        <img src="{{ public_path($restaurant->user->avatar) }}" class="img-fluid rounded-xl border border-2 border-foreground" />
+                                    </div>
+                                    @else
+                                    <div class="sw-4 sh-4 me-1 mb-1 d-inline-block bg-separator d-flex justify-content-center align-items-center rounded-xl">
+                                        <i class="bi-building icon icon-18" class="icon"></i>
+                                    </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('support.restaurants.show', $restaurant->id) }}">
+                                        {{ $restaurant->name }}
+                                    </a>
+                                </td>
+                                <td>{{ $restaurant->slug }}</td>
+                                <td>{{ $restaurant->user->email }}</td>
+                                <td>{{ $restaurant->telephone }}</td>
+                                <td class="text-small">{{ $restaurant->unsubscribe }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
                 <!-- Table End -->

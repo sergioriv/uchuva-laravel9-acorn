@@ -10,12 +10,11 @@ $title = __('Create payment');
 @endsection
 
 @section('js_vendor')
-<script src="/js/cs/scrollspy.js"></script>
 <script src="/js/vendor/select2.full.min.js"></script>
 <script src="/js/vendor/input-spinner.min.js"></script>
 <script src="/js/vendor/datepicker/bootstrap-datepicker.min.js"></script>
 <script src="/js/vendor/datepicker/locales/bootstrap-datepicker.es.min.js"></script>
-<script src="/js/vendor/timepicker.js"></script>
+{{-- <script src="/js/vendor/timepicker.js"></script> --}}
 @endsection
 
 @section('js_page')
@@ -27,9 +26,9 @@ $title = __('Create payment');
       autoclose: true,
     });
 
-    if (document.querySelector('div.form-time input')) {
+    /* if (document.querySelector('div.form-time input')) {
       new TimePicker(document.querySelector('div.form-time input'));
-    }
+    } */
 </script>
 @endsection
 
@@ -58,7 +57,7 @@ $title = __('Create payment');
 
                             <div class="row">
                                 <!-- Subscription Mounth -->
-                                <div class="col-12 col-sm-12 col-xl-5">
+                                <div class="col-12 col-xl-6">
                                     <div class="mb-3">
                                         <x-label>{{ __('Subscription') . ' (' . __('Months') . ')' }}</x-label>
                                         <div class="input-group spinner" data-trigger="spinner">
@@ -76,19 +75,19 @@ $title = __('Create payment');
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-xl-5">
+                                <div class="col-12 col-xl-6">
                                     <div class="mb-3 form-date">
-                                        <label class="form-label">{{ __('Date') }}</label>
+                                        <label class="form-label">{{ __('Date start') }}</label>
                                         <input type="text" name="date" id="date" class="form-control" />
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-xl-2">
+                                {{-- <div class="col-12 col-sm-12 col-xl-2">
                                     <div class="time-picker-container mb-3 form-time">
                                         <label class="form-label">{{ __('Time') }}</label>
                                         <input class="form-control time-picker" name="time" id="time" />
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <x-button type="submit" class="btn-primary">{{ __('Create') }}</x-button>

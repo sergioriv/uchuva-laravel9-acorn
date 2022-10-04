@@ -26,11 +26,14 @@ class ConfirmEmailController extends Controller
     {
         $auth = Auth::user();
 
-        $diff = Carbon::create($auth->email_verified_at)->diffInMinutes(Carbon::now());
+        // $diff = Carbon::create($auth->email_verified_at)->diffInMinutes(Carbon::now());
 
-        if ($diff <= 2 || empty($auth->password)) {
+        if ( NULL === $auth->password )
+        {
             return view('auth.confirm-email')->with('status', 'success');
-        } else {
+        }
+        else
+        {
             Auth::logout();
             return view('auth.confirm-email')->with('status', 'fail');
         }

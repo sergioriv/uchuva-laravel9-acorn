@@ -49,6 +49,19 @@ $title = $category->name;
                 </div>
             </section>
 
+            @if ($category->dishes->count() === 0)
+            <form action="{{ route('restaurant.categories.destroy', $category->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <div class="d-flex justify-content-end">
+                    <x-button type="submit" class="btn-danger">{{ __('Delete category') }}</x-button>
+                </div>
+
+            </form>
+            @endif
+
+
         </div>
     </div>
 </div>

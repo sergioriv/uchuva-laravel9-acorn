@@ -30,9 +30,11 @@
     "Category": "Categoria",
     "Categories": "Categorias",
     "Categories list": "Categorias",
-    "Create category": "Crear categoria",
-    "Category created!": "Categoria creada!",
-    "Category updated!": "Categoria actualizada!",
+    "Create category": "Crear categoría",
+    "Category created!": "Categoría creada!",
+    "Category updated!": "Categoría actualizada!",
+    "Delete category": "Eliminar categoría",
+    "Category deleted!": "Categoría eliminada!",
 
     "Menu": "Menú",
     "Dish": "Plato",
@@ -41,6 +43,8 @@
     "Create dish": "Crear plato",
     "Dish created!": "Plato creado!",
     "Dish updated!": "Plato actualizado!",
+    "Delete dish": "Eliminar plato",
+    "Dish deleted!": "Plato eliminado!",
 
     "Table": "Mesa",
     "Tables": "Mesas",
@@ -48,6 +52,8 @@
     "Create table": "Crear mesa",
     "Table created!": "Mesa creada!",
     "Table updated!": "Mesa actualizada!",
+    "Delete table": "Eliminar mesa",
+    "Table deleted!": "Mesa eliminada!",
 
     "Backorders": "Pedidos pendientes",
     "Order": "Pedido",
@@ -74,8 +80,11 @@
     "Continue": "Continuar",
     "Quality": "Cant.",
     "Price": "Precio",
-
+    ":name has already been taken.": ":name ya ha sido registrado.",
+    "Not allowed": "No permitido",
     "The table was not found.": "La mesa no fue encontrada.",
+    "Start date": "Fecha de inicio",
+    "Hi": "Hola",
 
     "30 Days": "30 Días",
     "60 Days": "60 Días",

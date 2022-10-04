@@ -2,23 +2,26 @@
 
 namespace App\Models;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Waiter extends CastCreateModel
+class Waiter extends Model
 {
     use HasFactory;
+    use Uuid;
 
     protected $fillable = [
-        'id',
+        'user_id',
         'restaurant_id',
-        'branch_id',
+        'name',
         'telephone'
     ];
 
+    /* PARENTS */
     public function user()
     {
-        return $this->belongsTo(User::class, 'id')->select(['id','name','email', 'avatar']);
+        return $this->belongsTo(User::class, 'user_id')->select('id','name','email', 'avatar');
     }
 
     public function restaurant()
@@ -26,8 +29,4 @@ class Waiter extends CastCreateModel
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
 }

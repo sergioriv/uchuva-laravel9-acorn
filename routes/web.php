@@ -1,17 +1,19 @@
 <?php
 
 use App\Http\Controllers\Auth\ConfirmEmailController;
-use App\Http\Controllers\branch\DishController;
-use App\Http\Controllers\branch\TableController;
-use App\Http\Controllers\branch\WaiterController;
+use App\Http\Controllers\Mail\ContentMail;
+use App\Http\Controllers\restaurant\DishController;
+use App\Http\Controllers\restaurant\TableController;
+use App\Http\Controllers\restaurant\WaiterController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\restaurant\BranchController;
 use App\Http\Controllers\restaurant\CategoryController;
 use App\Http\Controllers\support\RestaurantController;
 use App\Http\Controllers\support\RoleController;
 use App\Http\Controllers\support\SubscriptionController;
 use App\Http\Controllers\support\UserController;
 use App\Http\Controllers\waiter\OrderController;
+use App\Models\TestUuid;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -54,31 +55,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /* Route Restaurants Subscriptions */
     Route::resource('restaurants/{restaurant}/subscriptions', SubscriptionController::class)->only('create','store')->names('support.subscriptions');
-    Route::get('restaurants/{restaurant}/subscriptions.json', [SubscriptionController::class, 'data']);
-
-    /* Route Branches */
-    Route::resource('branches', BranchController::class)->names('restaurant.branches');
-    Route::get('branches.json', [BranchController::class, 'data']);
-
-        /* Route Branch Waiters and Tables */
-        Route::get('branches/{branch}/waiters.json', [BranchController::class, 'waiters_data']);
-        Route::get('branches/{branch}/tables.json', [BranchController::class, 'tables_data']);
+    // Route::get('restaurants/{restaurant}/subscriptions.json', [SubscriptionController::class, 'data']);
 
     /* Route Waiters */
-    Route::resource('waiters', WaiterController::class)->names('branch.waiters');
-    Route::get('waiters.json', [WaiterController::class, 'data']);
+    Route::resource('waiters', WaiterController::class)->names('restaurant.waiters');
+    // Route::get('waiters.json', [WaiterController::class, 'data']);
 
     /* Route Categories */
-    Route::resource('categories', CategoryController::class)->except('delete')->names('restaurant.categories');
-    Route::get('categories.json', [CategoryController::class, 'data']);
+    Route::resource('categories', CategoryController::class)->except('show')->names('restaurant.categories');
+    // Route::get('categories.json', [CategoryController::class, 'data']);
 
     /* Route Dishes */
-    Route::resource('dishes', DishController::class)->except('show','delete')->names('branch.dishes');
-    Route::get('dishes.json', [DishController::class, 'data']);
+    Route::resource('dishes', DishController::class)->except('show')->names('restaurant.dishes');
+    // Route::get('dishes.json', [DishController::class, 'data']);
 
     /* Route Tables */
-    Route::resource('tables', TableController::class)->except('show','delete')->names('branch.tables');
-    Route::get('tables.json', [TableController::class, 'data']);
+    Route::resource('tables', TableController::class)->except('show')->names('restaurant.tables');
+    // Route::get('tables.json', [TableController::class, 'data']);
 
     /* Route Orders */
     Route::resource('orders', OrderController::class)->except('delete')->names('waiter.orders');

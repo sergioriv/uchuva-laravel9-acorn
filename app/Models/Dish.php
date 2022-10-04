@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dish extends CastCreateModel
+class Dish extends Model
 {
     use HasFactory;
+    use Uuid;
 
     protected $fillable = [
         'restaurant_id',
-        'branch_id',
         'category_id',
         'name',
         'description',
@@ -20,18 +21,20 @@ class Dish extends CastCreateModel
         'available'
     ];
 
+    /* PARENTS */
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
-
     public function category()
     {
-        return $this->belongsTo(Category::class)->select('id', 'name');
+        return $this->belongsTo(Category::class);
+    }
+
+    /* CHILDREN */
+    public function orders()
+    {
+        return $this->hasMany(OrderDish::class, 'dish_id');
     }
 }

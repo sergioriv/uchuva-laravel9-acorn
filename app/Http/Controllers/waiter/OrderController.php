@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Dish;
 use App\Models\Order;
 use App\Models\OrderDish;
+use App\Models\Restaurant;
 use App\Models\Table;
 use App\Models\User;
 use App\Models\Waiter;
@@ -18,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -37,11 +39,11 @@ class OrderController extends Controller
     public function index()
     {
         switch (UserController::role_auth()):
-            case 'Waiter':
+            case 'WAITER':
                 return view('waiter.orders.index');
 
-            case 'Branch':
-                return view('branch.orders.index');
+            case 'RESTAURANT':
+                return view('restaurant.orders.index');
 
             default:
                 return redirect()->route('dashboard')->with(
@@ -53,29 +55,26 @@ class OrderController extends Controller
 
     public function data()
     {
-        $parents = $this->parents()[0];
 
         switch (UserController::role_auth()):
-            case 'Waiter':
+            case 'WAITER':
                 return [
                     'data' => Order::with('table')
                         ->select('id', 'table_id', 'code', 'total', 'created_at')
-                        ->where('waiter_id', '=', $parents->id)
+                        ->where('waiter_id', '=', $this->restaurant())
                         ->whereNull('finished')
                         ->orderBy('id', 'DESC')
                         ->get()
                 ];
 
-            case 'Branch':
-                return [
-                    'data' => Order::with('table')
-                        ->with('waiter')->whereHas('waiter', function ($waiter) use ($parents) {
-                            $waiter->where('branch_id', $parents->id);
-                        })
-                        ->whereNull('finished')
-                        ->orderBy('id', 'DESC')
-                        ->get()
-                ];
+            case 'RESTAURANT':
+
+                return ['data' => Order::where('restaurant_id', $this->restaurant())
+                                ->with('waiter')
+                                ->with('table')
+                                ->whereNull('finished')
+                                ->orderBy('id', 'DESC')
+                                ->get()];
 
             default:
                 return null;
@@ -90,10 +89,12 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $parents = $this->parents()[0];
-        $tables = Table::where('branch_id', '=', $parents->branch_id)->get();
+        $tables = Table::where('restaurant_id', $this->restaurant())->get();
         $categories = $this->dishes_categories();
-        return view('waiter.orders.create')->with(['tables' => $tables, 'categories' => $categories]);
+        return view('restaurant.orders.create', [
+            'tables' => $tables,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -106,15 +107,18 @@ class OrderController extends Controller
     {
 
         $request->validate([
-            'table' => ['required', 'numeric', 'min:0', new TablesExistRule()]
+            'table' => ['required', Rule::exists('tables','id')]
         ]);
 
-        $parents = $this->parents()[0];
+        $waiter = null;
+        if (UserController::role_auth() === 'WAITER')
+            $waiter = Auth::user()->id;
+
 
         $order = Order::create([
-            'restaurant_id' => $parents->restaurant_id,
+            'restaurant_id' => $this->restaurant(),
             'table_id'      => $request->table,
-            'waiter_id'     => $parents->id,
+            'waiter_id'     => $waiter,
             'code'          => Str::upper(Str::random(8)),
             'total'         => 0
         ]);
@@ -300,14 +304,14 @@ class OrderController extends Controller
     }
 
 
-    private function parents()
+    private function restaurant()
     {
         switch (UserController::role_auth()) {
-            case 'Waiter':
-                return Waiter::findOrFail(Auth::user()->id)->select('id', 'restaurant_id', 'branch_id')->get();
+            case 'WAITER':
+                return Waiter::where('user_id', Auth::user()->id)->first()->id;
 
-            case 'Branch':
-                return Branch::findOrFail(Auth::user()->id)->select('id', 'restaurant_id')->get();
+            case 'RESTAURANT':
+                return Restaurant::where('user_id', Auth::user()->id)->first()->id;
 
             default:
                 return null;
@@ -316,11 +320,8 @@ class OrderController extends Controller
 
     private function dishes_categories()
     {
-        $parents = $this->parents()[0];
-        return Category::with('dishes')
-            ->whereHas('dishes', function (Builder $query) {
-                $query->whereNotNull('available');
-            })
-            ->where('restaurant_id', '=', $parents->restaurant_id)->get();
+        return Category::where('restaurant_id', $this->restaurant())
+            ->whereHas('dishes', fn ($dish) => $dish->whereNotNull('available'))
+            ->get();
     }
 }

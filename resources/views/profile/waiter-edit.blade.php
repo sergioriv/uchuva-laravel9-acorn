@@ -59,7 +59,7 @@ $title = $waiter->user->name;
                                         <!-- Name -->
                                         <div class="mb-3">
                                             <x-label>{{ __('Name') }}</x-label>
-                                            <x-input id="name" name="name" value="{{ $waiter->user->name }}" required autofocus />
+                                            <x-input id="name" name="name" value="{{ $waiter->name }}" required autofocus />
                                         </div>
 
                                         <!-- Email -->

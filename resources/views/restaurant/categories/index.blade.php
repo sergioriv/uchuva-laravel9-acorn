@@ -8,14 +8,12 @@ $title = __('Categories list');
 @endsection
 
 @section('js_vendor')
-<script src="/js/vendor/bootstrap-submenu.js"></script>
 <script src="/js/vendor/datatables.min.js"></script>
-<script src="/js/vendor/mousetrap.min.js"></script>
 @endsection
 
 @section('js_page')
 <script src="/js/cs/datatable.extend.js"></script>
-<script src="/js/plugins/datatable/categories_datatable.ajax.js"></script>
+<script src="/js/plugins/datatable/datatable_standard.js"></script>
 @endsection
 
 @section('content')
@@ -70,13 +68,25 @@ $title = __('Categories list');
 
                 <!-- Table Start -->
                 <div class="data-table-responsive-wrapper">
-                    <table id="datatable_categories" class="data-table nowrap w-100">
+                    <table DataTable="true" class="data-table nowrap w-100">
                         <thead>
                             <tr>
                                 <th class="text-muted text-small text-uppercase">{{ __('Name') }}</th>
                                 <th class="text-muted text-small text-uppercase">{{ __('Created at') }}</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($categories as $category)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('restaurant.categories.edit', $category->id) }}">
+                                        {{ $category->name }}
+                                    </a>
+                                </td>
+                                <td class="text-small">{{ $category->created_at }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
                 <!-- Table End -->

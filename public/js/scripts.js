@@ -65,6 +65,9 @@ class Scripts {
     // Plugin pages initialization
     _initPlugins() {
         // datatable.editablerows.js initialization
+        if ("undefined" !== typeof DatatableStandard) {
+            new DatatableStandard();
+        }
         if (typeof RowsAjaxUsers !== "undefined") {
             const rowsAjaxUsers = new RowsAjaxUsers();
         }

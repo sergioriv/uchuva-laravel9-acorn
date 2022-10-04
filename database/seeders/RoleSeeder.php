@@ -22,11 +22,8 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $support_users  = Permission::create([ 'name' => 'support.users' ]);
-        $support_roles  = Permission::create([ 'name' => 'support.roles' ]);
+        $support_access  = Permission::create([ 'name' => 'support.access' ]);
         $restaurants  = Permission::create([ 'name' => 'support.restaurants' ]);
-
-        $dashboard  = Permission::create([ 'name' => 'dashboard' ]);
 
         $user_profile  = Permission::create([ 'name' => 'user.profile' ]);
 
@@ -36,7 +33,6 @@ class RoleSeeder extends Seeder
         $orders_edit  = Permission::create([ 'name' => 'orders.edit' ]);
         $orders_destroy  = Permission::create([ 'name' => 'orders.destroy' ]);
 
-        $branches  = Permission::create([ 'name' => 'branches' ]);
         $waiters  = Permission::create([ 'name' => 'waiters' ]);
         $dishes  = Permission::create([ 'name' => 'dishes' ]);
         $categories  = Permission::create([ 'name' => 'categories' ]);
@@ -45,25 +41,20 @@ class RoleSeeder extends Seeder
 
 
         $SUPPORT = Role::create([ 'name' => 'SUPPORT' ])->syncPermissions([
-            $support_users,
-            $support_roles,
+            $support_access,
             $restaurants,
         ]);
 
         $restaurant_role = Role::create([ 'name' => 'RESTAURANT' ])->syncPermissions([
-            $dashboard,
-            $branches,
-            $categories,
-            $user_profile
-        ]);
-
-        $branch_role = Role::create([ 'name' => 'BRANCH' ])->syncPermissions([
-            $dashboard,
             $user_profile,
+            $categories,
             $waiters,
             $dishes,
             $tables,
             $orders_index,
+            $orders_create,
+            $orders_show,
+            $orders_edit,
             $orders_destroy
         ]);
 
@@ -80,29 +71,22 @@ class RoleSeeder extends Seeder
          * Creacion user
          */
         User::create([
-            'name' => 'support',
-            'email' => 'support@mantiztechnology.com',
+            'name' => 'admin',
+            'email' => 'admin@mojatechnology.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ])->syncRoles($SUPPORT);
 
         $restaurant_user = User::create([
             'name' => 'restaurante 1',
-            'email' => 'res1@example',
+            'email' => 'res1@moja',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ])->syncRoles($restaurant_role);
 
-        $branch_user = User::create([
-            'name' => 'sucursal 1',
-            'email' => 'suc1@example',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        ])->syncRoles($branch_role);
-
         $waiter_user = User::create([
             'name' => 'Camarero 1',
-            'email' => 'cam1@example',
+            'email' => 'cam1@moja',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ])->syncRoles($waiter_role);
@@ -111,8 +95,11 @@ class RoleSeeder extends Seeder
         /*
          * Creacion Restaurant
          */
-        Restaurant::create([
-            'id' => $restaurant_user->id,
+        $restaurant_name = 'Restaurante 1';
+        $RESTAURANT = Restaurant::create([
+            'user_id' => $restaurant_user->id,
+            'name' => $restaurant_name,
+            'slug' => Str::slug($restaurant_name),
             'nit' => 'nit9999999',
             'unsubscribe' => now()->addMonth(1),
         ]);
@@ -122,23 +109,10 @@ class RoleSeeder extends Seeder
          * Creacion Restaurant Subscription
          */
         Subscription::create([
-            'restaurant_id' => $restaurant_user->id,
+            'restaurant_id' => $RESTAURANT->id,
             'quantity' => 5,
             'payment_date' => now(),
-            'unsubscribe' => now()->addMonth(5)
-        ]);
-
-
-        /*
-         * Creacion Branches
-         */
-        Branch::create([
-            'id' => $branch_user->id,
-            'restaurant_id' => $restaurant_user->id,
-            'code' => Str::upper(Str::random(5)),
-            'city' => 'Antioquia - Alejandría',
-            'address' => 'suc1-dir',
-            'telephone' => 'suc1-tel'
+            'unsubscribe' => now()->addMonth(1)
         ]);
 
 
@@ -146,9 +120,9 @@ class RoleSeeder extends Seeder
          * Creacion Waiters
          */
         Waiter::create([
-            'id' => $waiter_user->id,
-            'restaurant_id' => $restaurant_user->id,
-            'branch_id' => $branch_user->id,
+            'user_id' => $waiter_user->id,
+            'restaurant_id' => $RESTAURANT->id,
+            'name' => 'Camarero 1',
             'telephone' => 'cam1-tel'
         ]);
 

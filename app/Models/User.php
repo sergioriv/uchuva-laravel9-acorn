@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\uuid;
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable /* implements MustVerifyEmail */
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use Uuid;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +38,11 @@ class User extends Authenticatable /* implements MustVerifyEmail */
         'remember_token',
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime:Y-m-d H:i:s',
+        'created_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
 
     /**
      * Mutadores y Accesores
@@ -48,24 +55,17 @@ class User extends Authenticatable /* implements MustVerifyEmail */
         );
     }
 
-    protected function emailVerifiedAt(): Attribute
+    /* protected function emailVerifiedAt(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value, 'UTC')->timezone(config('app.timezone'))->format('Y-m-d H:i:s')
         );
-    }
+    } */
 
-    protected function createdAt(): Attribute
+    /* protected function createdAt(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value, 'UTC')->timezone(config('app.timezone'))->format('Y-m-d H:i:s')
         );
-    }
-
-    protected function updatedAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Carbon::parse($value, 'UTC')->timezone(config('app.timezone'))->format('Y-m-d H:i:s')
-        );
-    }
+    } */
 }

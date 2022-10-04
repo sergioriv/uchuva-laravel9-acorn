@@ -40,7 +40,7 @@ class RowsAjaxOrdersBranch {
                 { data: "code" },
                 { data: "table.reference" },
                 { data: "total", render: $.fn.dataTable.render.number( ',', '.', 2 ) },
-                { data: "waiter.user.name" },
+                { data: "waiter" },
                 { data: "created_at"}
             ],
             language: {
@@ -63,6 +63,14 @@ class RowsAjaxOrdersBranch {
                             '<a class="list-item-heading body font-weight-bold" href="/orders/' + row.id +'/edit">' + data + "</a>"
                         );
                     },
+                },
+                {
+                    targets: 3,
+                    render: function (data) {
+                        if (data !== null)
+                            return data.user.name
+                        else return ''
+                    }
                 },
                 {
                     targets: 4,

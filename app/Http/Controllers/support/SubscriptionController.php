@@ -12,10 +12,10 @@ use Illuminate\Http\Request;
 class SubscriptionController extends Controller
 {
 
-    public function data(Restaurant $restaurant)
+    /* public function data(Restaurant $restaurant)
     {
         return ['data' => Subscription::where('restaurant_id', '=', $restaurant->id)->get()];
-    }
+    } */
 
     /**
      * Show the form for creating a new resource.
@@ -24,8 +24,9 @@ class SubscriptionController extends Controller
      */
     public function create(Restaurant $restaurant)
     {
-        $restaurant->user;
-        return view('support.subscriptions.create')->with('restaurant', $restaurant);
+        return view('support.subscriptions.create', [
+            'restaurant' => $restaurant
+        ]);
     }
 
     /**
@@ -34,15 +35,19 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Restaurant $restaurant)
+    public function store(Restaurant $restaurant, Request $request)
     {
-        $payment_date = $request->date .' '. $request->time;
-        $unsubscribe = Carbon::parse($payment_date)->addMonths($request->quantity);
+        $request->validate([
+            'quantity' => ['required', 'numeric'],
+            'date' => ['required', 'date'],
+        ]);
+
+        $unsubscribe = Carbon::parse($request->date)->addMonths($request->quantity)->format('Y-m-d');
 
         Subscription::create([
             'restaurant_id' => $restaurant->id,
             'quantity' => $request->quantity,
-            'payment_date' => $payment_date,
+            'payment_date' => $request->date,
             'unsubscribe' => $unsubscribe
         ]);
 

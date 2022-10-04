@@ -44,7 +44,7 @@ $title = $restaurant->user->name . ' | ' .  __('Restaurant');
                             <!-- Email -->
                             <div class="mb-3">
                                 <x-label>{{ __('Email') }}</x-label>
-                                <x-input id="email" name="email"  value="{{ $restaurant->user->email }}" required />
+                                <x-input disabled id="email" name="email"  value="{{ $restaurant->user->email }}" required />
                             </div>
 
                             <!-- Nit -->

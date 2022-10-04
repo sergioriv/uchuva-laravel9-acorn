@@ -58,7 +58,7 @@ $title = $restaurant->user->name;
                                     <!-- Name -->
                                     <div class="mb-3">
                                         <x-label>{{ __('Name') }}</x-label>
-                                        <x-input id="name" name="name" value="{{ $restaurant->user->name }}" required
+                                        <x-input id="name" name="name" value="{{ $restaurant->name }}" required
                                             autofocus />
                                     </div>
 

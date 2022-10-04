@@ -8,15 +8,12 @@ $title = $restaurant->user->name;
 @endsection
 
 @section('js_vendor')
-<script src="/js/cs/responsivetab.js"></script>
-<script src="/js/vendor/bootstrap-submenu.js"></script>
 <script src="/js/vendor/datatables.min.js"></script>
-<script src="/js/vendor/mousetrap.min.js"></script>
 @endsection
 
 @section('js_page')
 <script src="/js/cs/datatable.extend.js"></script>
-<script src="/js/plugins/datatable/profile/subscriptions_datatable.ajax.js"></script>
+<script src="/js/plugins/datatable/datatable_standard.js"></script>
 @endsection
 
 @section('content')
@@ -36,7 +33,7 @@ $title = $restaurant->user->name;
             <section class="scroll-section">
                 <div class="row gx-4 gy-5">
                     <!-- Left Side Start -->
-                    <div class="col-12 col-xl-4 col-xxl-3">
+                    <div class="col-12 col-xl-3">
                         <!-- Biography Start -->
                         <div class="card">
                             <div class="card-body mb-n5">
@@ -45,7 +42,7 @@ $title = $restaurant->user->name;
 
                                         @if ($restaurant->user->avatar != NULL)
                                         <div class="sw-13 position-relative mb-3">
-                                            <img src="{{ $restaurant->user->avatar }}" class="rounded-xl sh-13 sw-13"
+                                            <img src="{{ config('app.url') .'/'. $restaurant->user->avatar }}" class="rounded-xl sh-13 sw-13"
                                                 alt="thumb" />
                                         </div>
                                         @else
@@ -55,8 +52,9 @@ $title = $restaurant->user->name;
                                         </div>
                                         @endif
 
-                                        <div class="h5 mb-0">{{ $restaurant->user->name }}</div>
+                                        <div class="h5 mb-0">{{ $restaurant->name }}</div>
                                         <div class="text-muted">{{ $restaurant->nit }}</div>
+                                        <div class="mt-1 text-muted">{{ $restaurant->slug }}</div>
                                     </div>
                                 </div>
 
@@ -88,37 +86,36 @@ $title = $restaurant->user->name;
                     <!-- Left Side End -->
 
                     <!-- Right Side Start -->
-                    <div class="col-12 col-xl-8 col-xxl-9">
-                        <!-- Title Tabs Start -->
-                        <ul class="nav nav-tabs nav-tabs-title nav-tabs-line-title responsive-tabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#paymentsTab" role="tab"
-                                    aria-selected="true">{{ __('Payments') }}</a>
-                            </li>
-                        </ul>
-                        <!-- Title Tabs End -->
+                    <div class="col-12 col-xl-9">
 
-                        <div class="tab-content">
+                        <h4 class="small-title">{{ __("Payments") }}</h4>
                             <!-- Payments Tab Start -->
-                            <div class="tab-pane fade active show" id="paymentsTab" role="tabpanel">
                                 <div class="data-table-rows slim">
                                     <!-- Table Start -->
                                     <div class="data-table-responsive-wrapper">
-                                        <table id="datatable_subscriptions" class="data-table nowrap w-100">
+                                        <table DataTable="true" class="data-table nowrap w-100">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-muted text-small text-uppercase">{{ __('Quantity') }}</th>
-                                                    <th class="text-muted text-small text-uppercase">{{ __('Payment date') }}</th>
+                                                    <th class="text-muted text-small text-uppercase">{{ __('Months') }}</th>
+                                                    <th class="text-muted text-small text-uppercase">{{ __('Start date') }}</th>
                                                     <th class="text-muted text-small text-uppercase">{{ __('Unsubscribe') }}</th>
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                @foreach ($restaurant->subscriptions as $subscription)
+                                                <tr>
+                                                    <td>{{ $subscription->quantity }}</td>
+                                                    <td class="text-small">{{ $subscription->payment_date }}</td>
+                                                    <td class="text-small">{{ $subscription->unsubscribe }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
                                         </table>
                                     </div>
                                     <!-- Table End -->
                                 </div>
-                            </div>
+
                             <!-- Payments Tab End -->
-                        </div>
                     </div>
                     <!-- Right Side End -->
                 </div>
