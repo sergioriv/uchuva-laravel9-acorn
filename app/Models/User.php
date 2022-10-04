@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\uuid;
-use Carbon\Carbon;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable /* implements MustVerifyEmail */
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
     use Uuid;
@@ -55,17 +53,4 @@ class User extends Authenticatable /* implements MustVerifyEmail */
         );
     }
 
-    /* protected function emailVerifiedAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Carbon::parse($value, 'UTC')->timezone(config('app.timezone'))->format('Y-m-d H:i:s')
-        );
-    } */
-
-    /* protected function createdAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Carbon::parse($value, 'UTC')->timezone(config('app.timezone'))->format('Y-m-d H:i:s')
-        );
-    } */
 }
