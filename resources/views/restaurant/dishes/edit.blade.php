@@ -9,7 +9,7 @@ $title = $dish->name;
 @endsection
 
 @section('js_vendor')
-<script src="/js/cs/scrollspy.js"></script>
+<script src="/js/vendor/singleimageupload.js"></script>
 <script src="/js/vendor/input-spinner.min.js"></script>
 <script src="/js/vendor/select2.full.min.js"></script>
 @endsection
@@ -17,6 +17,7 @@ $title = $dish->name;
 @section('js_page')
 <script>
     jQuery('#category').select2({placeholder: ''});
+    new SingleImageUpload(document.getElementById('dishImage'))
 </script>
 @endsection
 
@@ -40,89 +41,112 @@ $title = $dish->name;
                         <x-validation-errors class="mb-4" :errors="$errors" />
 
                         <form method="POST" action="{{ route('restaurant.dishes.update', $dish) }}" class="tooltip-end-bottom"
-                            novalidate>
+                            enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
 
-                            <div class="row g-3 mb-3">
+                            <div class="row">
 
-                                <!-- Category -->
-                                <div class="col-md-6">
-                                    <div class="w-100 form-group position-relative">
-                                        <x-label>{{ __('Category') }}</x-label>
-                                        <select name="category" id="category" required>
-                                            <option value="" selected disabled></option>
-                                            @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ $dish->category_id==$category->id ? 'selected' : '' }} >
-                                                {{ $category->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
+                                <!-- content left -->
+                                <div class="col-md-3 text-center">
+                                    <div class="position-relative d-inline-block" id="dishImage">
+                                        @if ($dish->image !== NULL)
+                                        <img src="{{ config('app.url'). '/'. $dish->image }}" alt="alternate text" class="rounded-md border border-separator-light border-4 sw-18 sh-18" />
+                                        @else
+                                        <img src="{{ config('app.url'). '/img/logo/uchuva.png' }}" alt="alternate text" class="rounded-md border border-separator-light border-4 sw-18 sh-18" />
+                                        @endif
+                                        <button class="btn btn-sm btn-icon btn-icon-only btn-separator-light rounded-xl position-absolute e-0 b-0" type="button">
+                                            <i data-acorn-icon="upload"></i>
+                                        </button>
+                                        <input name="image" class="file-upload d-none" type="file" accept="image/png, image/jpg, image/jpeg, image/webp" />
                                     </div>
                                 </div>
 
-                                <!-- Name -->
-                                <div class="col-md-6">
-                                    <div class="form-group position-relative">
-                                        <x-label>{{ __('Name') }}</x-label>
-                                        <x-input id="name" name="name" value="{{ $dish->name }}" required autofocus />
-                                    </div>
-                                </div>
+                                <!-- content right -->
+                                <div class="col-md-9">
+                                    <div class="row g-3 mb-3">
 
-                            </div>
-
-                            <div class="row g-3 mb-3">
-
-                                <!-- Price -->
-                                <div class="col-md-6">
-                                    <div class="form-group position-relative">
-                                        <x-label>{{ __('Price') }}</x-label>
-                                        <div class="input-group spinner" data-trigger="spinner">
-                                            <x-input type="text" id="price" name="price" value="{{ $dish->price }}" class="text-center" data-min="0" data-step="100" data-rule="currency" />
-                                            <div class="input-group-text">
-                                                <button type="button" class="spin-up" data-spin="up">
-                                                    <span class="arrow"></span>
-                                                </button>
-                                                <button type="button" class="spin-down" data-spin="down">
-                                                    <span class="arrow"></span>
-                                                </button>
+                                        <!-- Category -->
+                                        <div class="col-md-6">
+                                            <div class="w-100 form-group position-relative">
+                                                <x-label>{{ __('Category') }}</x-label>
+                                                <select name="category" id="category" required>
+                                                    <option value="" selected disabled></option>
+                                                    @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}"
+                                                        {{ $dish->category_id==$category->id ? 'selected' : '' }} >
+                                                        {{ $category->name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <!-- Quality -->
-                                <div class="col-md-6">
-                                    <div class="form-group position-relative">
-                                        <x-label>{{ __('Quality') }}</x-label>
-                                        <div class="input-group spinner" data-trigger="spinner">
-                                            <x-input type="text" id="quality" name="quality" value="{{ $dish->quality }}" class="text-center" data-min="0" data-rule="quantity" />
-                                            <div class="input-group-text">
-                                                <button type="button" class="spin-up" data-spin="up">
-                                                    <span class="arrow"></span>
-                                                </button>
-                                                <button type="button" class="spin-down" data-spin="down">
-                                                    <span class="arrow"></span>
-                                                </button>
+                                        <!-- Name -->
+                                        <div class="col-md-6">
+                                            <div class="form-group position-relative">
+                                                <x-label>{{ __('Name') }}</x-label>
+                                                <x-input id="name" name="name" value="{{ $dish->name }}" required autofocus />
                                             </div>
                                         </div>
+
+                                    </div>
+
+                                    <div class="row g-3 mb-3">
+
+                                        <!-- Price -->
+                                        <div class="col-md-6">
+                                            <div class="form-group position-relative">
+                                                <x-label>{{ __('Price') }}</x-label>
+                                                <div class="input-group spinner" data-trigger="spinner">
+                                                    <x-input type="text" id="price" name="price" value="{{ $dish->price }}" class="text-center" data-min="0" data-step="100" data-rule="currency" />
+                                                    <div class="input-group-text">
+                                                        <button type="button" class="spin-up" data-spin="up">
+                                                            <span class="arrow"></span>
+                                                        </button>
+                                                        <button type="button" class="spin-down" data-spin="down">
+                                                            <span class="arrow"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Quality -->
+                                        <div class="col-md-6">
+                                            <div class="form-group position-relative">
+                                                <x-label>{{ __('Quality') }}</x-label>
+                                                <div class="input-group spinner" data-trigger="spinner">
+                                                    <x-input type="text" id="quality" name="quality" value="{{ $dish->quality }}" class="text-center" data-min="0" data-rule="quantity" />
+                                                    <div class="input-group-text">
+                                                        <button type="button" class="spin-up" data-spin="up">
+                                                            <span class="arrow"></span>
+                                                        </button>
+                                                        <button type="button" class="spin-down" data-spin="down">
+                                                            <span class="arrow"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row g-3">
+
+                                        <!-- Description -->
+                                        <div class="col-md-12">
+                                            <div class="form-group position-relative">
+                                                <x-label>{{ __('Description') }}</x-label>
+                                                <textarea id="description" name="description" class="form-control">{{ $dish->description }}</textarea>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
                             </div>
 
-                            <div class="row g-3">
 
-                                <!-- Description -->
-                                <div class="col-md-12">
-                                    <div class="form-group position-relative">
-                                        <x-label>{{ __('Description') }}</x-label>
-                                        <textarea id="description" name="description" class="form-control">{{ $dish->description }}</textarea>
-                                    </div>
-                                </div>
-
-                            </div>
 
                             <!-- Available -->
                             <div class="mb-3">

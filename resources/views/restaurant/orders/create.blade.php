@@ -83,37 +83,48 @@ $title = __('Create order');
                                                     @if ($dish->available != NULL)
                                                     <tr>
                                                         <td>
-                                                            <text class="h4" id="dish-name-{{ $dish->id }}">{{
-                                                                $dish->name }}</text>
-                                                            <br>
-                                                            <text class="text-small" id="dish-price-{{ $dish->id }}">
-                                                                @money($dish->price)
-                                                            </text>
-                                                                <br>
-                                                            <text class="text-small">{{ __('Available') }}: </text>
-                                                            <text class="font-weight-bold text-primary">
-                                                                {{ $dish->quality }}
-                                                            </text>
-                                                            <br>
-                                                            <div class="input-group spinner" data-trigger="spinner">
-                                                                <div class="input-group-text">
-                                                                    <button type="button"
-                                                                        class="spin-down single btn-quality"
-                                                                        data-id="{{ $dish->id }}"
-                                                                        data-spin="down">-</button>
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    @if ($dish->image !== NULL)
+                                                                    <img src="{{ config('app.url'). '/'. $dish->image }}" alt="alternate text" class="rounded-md border border-separator-light border-4 sw-14 sh-14" />
+                                                                    @else
+                                                                    <img src="{{ config('app.url'). '/img/logo/uchuva.png' }}" alt="alternate text" class="rounded-md border border-separator-light border-4 sw-14 sh-14" />
+                                                                    @endif
                                                                 </div>
-                                                                <x-input type="text" name="dish-quality-{{ $dish->id }}"
-                                                                    id="dish-quality-{{ $dish->id }}"
-                                                                    data-id="{{ $dish->id }}"
-                                                                    class="text-center dish-quality"
-                                                                    value="{{ old('dish-'.$dish->id) }}" data-min="0"
-                                                                    data-max="{{ $dish->quality }}"
-                                                                    data-rule="quantity" />
-                                                                <div class="input-group-text">
-                                                                    <button type="button"
-                                                                        class="spin-up single btn-quality"
-                                                                        data-id="{{ $dish->id }}"
-                                                                        data-spin="up">+</button>
+                                                                <div class="col-7">
+                                                                    <text class="h4" id="dish-name-{{ $dish->id }}">{{
+                                                                        $dish->name }}</text>
+                                                                    <br>
+                                                                    <text class="h5" id="dish-price-{{ $dish->id }}">
+                                                                        @money($dish->price)
+                                                                    </text>
+                                                                        <br>
+                                                                    <text class="text-small">{{ __('Available') }}: </text>
+                                                                    <text class="font-weight-bold text-primary">
+                                                                        {{ $dish->quality }}
+                                                                    </text>
+                                                                    <br>
+                                                                    <div class="input-group spinner" data-trigger="spinner">
+                                                                        <div class="input-group-text">
+                                                                            <button type="button"
+                                                                                class="spin-down single btn-quality"
+                                                                                data-id="{{ $dish->id }}"
+                                                                                data-spin="down">-</button>
+                                                                        </div>
+                                                                        <x-input type="text" name="dish-quality-{{ $dish->id }}"
+                                                                            id="dish-quality-{{ $dish->id }}"
+                                                                            data-id="{{ $dish->id }}"
+                                                                            class="text-center dish-quality"
+                                                                            value="{{ old('dish-'.$dish->id) }}" data-min="0"
+                                                                            data-max="{{ $dish->quality }}"
+                                                                            data-rule="quantity" />
+                                                                        <div class="input-group-text">
+                                                                            <button type="button"
+                                                                                class="spin-up single btn-quality"
+                                                                                data-id="{{ $dish->id }}"
+                                                                                data-spin="up">+</button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div id="note-{{ $dish->id }}" class="mt-2 d-none">

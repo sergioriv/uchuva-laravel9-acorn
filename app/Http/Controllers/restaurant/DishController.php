@@ -9,6 +9,7 @@ use App\Models\Dish;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class DishController extends Controller
 {
@@ -48,6 +49,7 @@ class DishController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'image' => ['image', 'mimes:jpg,jpeg,png,webp','max:2048'],
             'name'      => ['required', 'string', 'max:50'],
             'description' => ['string', 'max:255'],
             'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
@@ -56,7 +58,7 @@ class DishController extends Controller
         ]);
 
 
-        Dish::create([
+        $dish = Dish::create([
             'restaurant_id' => $this->restaurant(),
             'category_id' => $request->category,
             'name' => $request->name,
@@ -65,6 +67,9 @@ class DishController extends Controller
             'quality' => $request->quality,
             'available' => $request->available
         ]);
+
+        self::uploadImage($dish, $request);
+
 
         return redirect()->route('restaurant.dishes.index')->with(
             ['notify' => 'success', 'title' => __('Dish created!')],
@@ -113,6 +118,8 @@ class DishController extends Controller
             'available' => $request->available
         ]);
 
+        self::uploadImage($dish, $request);
+
         return redirect()->route('restaurant.dishes.index')->with(
             ['notify' => 'success', 'title' => __('Dish updated!')],
         );
@@ -137,6 +144,26 @@ class DishController extends Controller
         return redirect()->route('restaurant.dishes.index')->with(
             ['notify' => 'success', 'title' => __('Dish deleted!')],
         );
+    }
+
+
+    private function uploadImage($dish, $request)
+    {
+        $file = 'image';
+        if ($request->hasFile($file)) {
+            if ($request->file($file)->isValid()) {
+
+                if ($dish->image !== NULL) {
+                    File::delete(public_path($dish->image));
+                }
+
+                $path = $request->file($file)->store('restaurant/'. self::restaurant() .'/dishes', 'public');
+                $pathSave = config('filesystems.disks.public.url') .'/' . $path;
+
+                $dish->update(['image' => $pathSave]);
+            }
+        }
+
     }
 
 

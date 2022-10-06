@@ -71,7 +71,7 @@ jQuery("#order-confirm").click(function () {
     }
 
     inner_dishes +=
-        `<div class="text-center h4 mb-5">Mesa: ` +
+        `<div class="text-center h4 mb-2">Mesa: ` +
         $("#table").data("reference") +
         `</div>`;
     inner_dishes += `<div class="data-table-rows slim">`;
@@ -86,11 +86,11 @@ jQuery("#order-confirm").click(function () {
             $("#dish-name-" + dish_id).html() +
             `</text><br>`;
         inner_dishes +=
-            `<text class="text-small">` +
+            `<text class="h5">` +
             $("#dish-price-" + dish_id).html() +
             `</text><br>`;
         inner_dishes +=
-            `<text class="font-weight-bold h5 text-primary">` +
+            `Cant. <text class="font-weight-bold h5 text-primary">` +
             $("#dish-quality-" + dish_id).val() +
             `</text><br>`;
         if (
@@ -99,7 +99,7 @@ jQuery("#order-confirm").click(function () {
                 .trim().length != 0
         )
             inner_dishes +=
-                `<text class="text-small">` +
+                `<text class="text-muted">` +
                 $("#dish-note-" + dish_id).val() +
                 `</text><br>`;
         inner_dishes += `</td></tr>`;
